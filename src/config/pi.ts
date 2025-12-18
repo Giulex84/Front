@@ -1,5 +1,3 @@
-export const PI_CONFIG = {
-  appName: "Pactpi",
-  version: "0.1.0",
-  environment: "development"
-};
+export const PI_ENABLED =
+  typeof window !== "undefined" &&
+  typeof (window as any).Pi !== "undefined";
