@@ -1,17 +1,26 @@
 import type { Agreement } from "../types/agreement";
+import { BACKEND_URL } from "../config/backend";
 
 export async function fetchAgreements(): Promise<Agreement[]> {
-  throw new Error("API not implemented");
+  const res = await fetch(`${BACKEND_URL}/agreements`);
+  if (!res.ok) throw new Error("fetch failed");
+  return res.json();
 }
 
 export async function createAgreementApi(
-  _agreement: Agreement
+  agreement: Agreement
 ): Promise<void> {
-  throw new Error("API not implemented");
+  await fetch(`${BACKEND_URL}/agreements`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(agreement),
+  });
 }
 
 export async function signAgreementApi(
-  _id: string
+  id: string
 ): Promise<void> {
-  throw new Error("API not implemented");
+  await fetch(`${BACKEND_URL}/agreements/${id}/sign`, {
+    method: "POST",
+  });
 }
