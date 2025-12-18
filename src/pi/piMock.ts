@@ -1,7 +1,3 @@
-export const isPiBrowser = (): boolean => {
-  return typeof (window as any).Pi !== "undefined";
-};
-
 export const PiMock = {
   authenticate: async () => {
     return {
