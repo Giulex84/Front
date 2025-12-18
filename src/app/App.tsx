@@ -1,7 +1,8 @@
 import { useEffect } from "react";
+import { BrowserRouter } from "react-router-dom";
 import { usePi } from "../pi/usePi";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../pages/Home";
+import AppRouter from "./AppRouter";
 
 function App() {
   const { isPi } = usePi();
@@ -11,9 +12,11 @@ function App() {
   }, [isPi]);
 
   return (
-    <MainLayout>
-      <Home />
-    </MainLayout>
+    <BrowserRouter>
+      <MainLayout>
+        <AppRouter />
+      </MainLayout>
+    </BrowserRouter>
   );
 }
 
