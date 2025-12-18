@@ -1,22 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import { usePi } from "../pi/usePi";
 import MainLayout from "../layouts/MainLayout";
-import Home from "../pages/Home";
-import About from "../pages/About";
-import Agreements from "../pages/Agreements";
-import { useBootstrap } from "../hooks/useBootstrap";
 
-export default function App() {
-  useBootstrap();
+function App() {
+  const { isPi } = usePi();
 
-  return (
-    <BrowserRouter>
-      <MainLayout>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/agreements" element={<Agreements />} />
-        </Routes>
-      </MainLayout>
-    </BrowserRouter>
-  );
+  useEffect(() => {
+    console.log("Pi Browser:", isPi);
+  }, [isPi]);
+
+  return <MainLayout />;
 }
+
+export default App;
