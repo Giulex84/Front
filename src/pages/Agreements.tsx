@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useAgreements } from "../hooks/useAgreements";
-import { exportAgreementJson } from "../utils/exportAgreement";
 
 export default function Agreements() {
   const { agreements, createAgreement, signAgreement } = useAgreements();
@@ -39,21 +38,13 @@ export default function Agreements() {
             <strong>{a.title}</strong>
             <p>{a.content}</p>
 
-            {a.signedBy ? (
-              <>
-                <p>
-                  ✅ Signed by {a.signedBy} at {a.signedAt}
-                </p>
-                <p>🔐 Hash: {a.hash}</p>
-                <button onClick={() => exportAgreementJson(a)}>
-                  Export JSON
-                </button>
-              </>
-            ) : (
-              <button onClick={() => signAgreement(a.id)}>
-                Sign with Pi
-              </button>
-            )}
+{a.signedBy ? (
+  <p>Signed</p>
+) : (
+  <button onClick={() => signAgreement(a.id)}>
+    Sign with Pi
+  </button>
+)}
           </li>
         ))}
       </ul>
