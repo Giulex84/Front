@@ -1,45 +1,38 @@
 export default function Home() {
   return (
-    <section>
-      <h1 style={{ fontSize: "2rem", marginBottom: "0.5rem" }}>
+    <main style={{ maxWidth: 720, margin: "3rem auto", padding: "0 1rem" }}>
+      <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>
         Pactpi
       </h1>
 
-      <h2 style={{ fontSize: "1.2rem", fontWeight: 400, marginBottom: "1.5rem" }}>
-        Create and manage digital agreements in a simple, transparent way.
-      </h2>
-
-      <p style={{ maxWidth: 720, lineHeight: 1.6, marginBottom: "1.5rem" }}>
-        Pactpi is a utility platform designed to help users define, review, and confirm
-        digital agreements. It focuses on clarity, accountability, and ease of use.
+      <p style={{ fontSize: "1.1rem", lineHeight: 1.6, marginBottom: "2rem" }}>
+        Create, review, and confirm digital agreements with clarity and accountability.
       </p>
 
-      <section style={{ maxWidth: 720, marginBottom: "2rem" }}>
-        <h3>What Pactpi is</h3>
+      <section style={{ marginBottom: "2rem" }}>
+        <h2>What this is</h2>
         <p>
-          Pactpi provides tools to structure and display agreements clearly,
-          helping participants understand terms and expectations.
-        </p>
-
-        <h3>How it helps</h3>
-        <p>
-          All information is presented in a straightforward format to reduce
-          misunderstandings and support informed decisions.
-        </p>
-
-        <h3>Designed for accessibility</h3>
-        <p>
-          The interface is lightweight, mobile-first, and optimized for use
-          within the Pi Browser.
+          Pactpi is a practical tool to formalize agreements inside the Pi ecosystem.
+          No legal noise. No complexity. Just clear commitments.
         </p>
       </section>
 
-      <section style={{ maxWidth: 720, fontSize: "0.9rem", color: "#555" }}>
+      <section style={{ marginBottom: "2rem" }}>
+        <h2>What you can do</h2>
+        <ul>
+          <li>Create a digital agreement</li>
+          <li>Share it with another party</li>
+          <li>Confirm it using Pi</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Start</h2>
         <p>
-          Pactpi does not provide financial advice and does not guarantee outcomes.
-          Users remain responsible for reviewing and agreeing to all terms.
+          Go to <strong>Agreements</strong> to create your first commitment.
         </p>
       </section>
-    </section>
+    </main>
   );
 }
+
