@@ -34,6 +34,11 @@ const mockCommitments: Commitment[] = [
   },
 ];
 
+const partnerMiniSignals = [
+  "Reliable Partner",
+  "Limited history",
+];
+
 const Dashboard: React.FC = () => {
   return (
     <div
@@ -55,19 +60,21 @@ const Dashboard: React.FC = () => {
           A pact begins with intention.
         </p>
       ) : (
-        <div
-  key={commitment.id}
-  style={{
-    border: "1px solid #e0e0e0",
-    borderRadius: "8px",
-    padding: "1rem",
-    cursor: "pointer",
-  }}
-  onClick={() => {
-    window.location.href = "/pact";
-  }}
->
-
+        <div>
+          {mockCommitments.map((commitment) => (
+            <div
+              key={commitment.id}
+              style={{
+                border: "1px solid #e0e0e0",
+                borderRadius: "8px",
+                padding: "1rem",
+                marginBottom: "1rem",
+                cursor: "pointer",
+              }}
+              onClick={() => {
+                window.location.href = "/pact";
+              }}
+            >
               <h3 style={{ marginBottom: "0.5rem" }}>
                 {commitment.title}
               </h3>
@@ -79,6 +86,21 @@ const Dashboard: React.FC = () => {
               <p style={{ fontSize: "0.9rem", fontWeight: 500 }}>
                 Status: {commitment.status}
               </p>
+
+              {/* Mini Trust Signals */}
+              <div
+                style={{
+                  marginTop: "0.5rem",
+                  fontSize: "0.85rem",
+                  opacity: 0.75,
+                }}
+              >
+                {partnerMiniSignals.map((signal, index) => (
+                  <span key={index} style={{ marginRight: "0.75rem" }}>
+                    • {signal}
+                  </span>
+                ))}
+              </div>
             </div>
           ))}
         </div>
@@ -86,18 +108,17 @@ const Dashboard: React.FC = () => {
 
       <div style={{ marginTop: "2rem" }}>
         <button
-  style={{
-    padding: "0.75rem 1.5rem",
-    fontSize: "1rem",
-    cursor: "pointer",
-  }}
-  onClick={() => {
-    window.location.href = "/create";
-  }}
->
-  Create new pact
-</button>
-
+          style={{
+            padding: "0.75rem 1.5rem",
+            fontSize: "1rem",
+            cursor: "pointer",
+          }}
+          onClick={() => {
+            window.location.href = "/create";
+          }}
+        >
+          Create new pact
+        </button>
       </div>
     </div>
   );
