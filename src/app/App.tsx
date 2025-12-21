@@ -1,23 +1,20 @@
-import { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { usePi } from "../pi/usePi";
-import MainLayout from "../layouts/MainLayout";
-import AppRouter from "./AppRouter";
+import React from "react";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
 
-function App() {
-  const { isPi } = usePi();
+const App: React.FC = () => {
+  const path = window.location.pathname;
 
-  useEffect(() => {
-    console.log("Pi Browser:", isPi);
-  }, [isPi]);
+  if (path === "/login") {
+    return <Login />;
+  }
 
-  return (
-    <BrowserRouter>
-      <MainLayout>
-        <AppRouter />
-      </MainLayout>
-    </BrowserRouter>
-  );
-}
+  if (path === "/dashboard") {
+    return <Dashboard />;
+  }
+
+  return <Home />;
+};
 
 export default App;
