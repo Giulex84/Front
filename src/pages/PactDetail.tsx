@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 type PactStatus =
   | "Awaiting agreement"
@@ -6,7 +6,7 @@ type PactStatus =
   | "Fulfilled"
   | "Withdrawn";
 
-const mockPact = {
+const initialPact = {
   id: 1,
   title: "Deliver website design",
   description:
@@ -18,7 +18,19 @@ const mockPact = {
 };
 
 const PactDetail: React.FC = () => {
-  const { title, description, creator, partner, status, createdAt } = mockPact;
+  const [status, setStatus] = useState<PactStatus>(initialPact.status);
+
+  const handleAccept = () => {
+    setStatus("Active commitment");
+  };
+
+  const handleFulfill = () => {
+    setStatus("Fulfilled");
+  };
+
+  const handleWithdraw = () => {
+    setStatus("Withdrawn");
+  };
 
   return (
     <div
@@ -29,20 +41,24 @@ const PactDetail: React.FC = () => {
         margin: "0 auto",
       }}
     >
-      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>{title}</h1>
+      <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
+        {initialPact.title}
+      </h1>
 
       <p style={{ marginBottom: "1rem", opacity: 0.8 }}>
-        Created on {createdAt}
+        Created on {initialPact.createdAt}
       </p>
 
-      <p style={{ marginBottom: "1.5rem" }}>{description}</p>
+      <p style={{ marginBottom: "1.5rem" }}>
+        {initialPact.description}
+      </p>
 
       <div style={{ marginBottom: "1.5rem" }}>
         <p>
-          <strong>Creator:</strong> {creator}
+          <strong>Creator:</strong> {initialPact.creator}
         </p>
         <p>
-          <strong>Partner:</strong> {partner}
+          <strong>Partner:</strong> {initialPact.partner}
         </p>
         <p>
           <strong>Status:</strong> {status}
@@ -51,15 +67,21 @@ const PactDetail: React.FC = () => {
 
       <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
         {status === "Awaiting agreement" && (
-          <button>Accept commitment</button>
+          <button onClick={handleAccept}>
+            Accept commitment
+          </button>
         )}
 
         {status === "Active commitment" && (
-          <button>Mark as fulfilled</button>
+          <button onClick={handleFulfill}>
+            Mark as fulfilled
+          </button>
         )}
 
         {status !== "Withdrawn" && status !== "Fulfilled" && (
-          <button>Withdraw commitment</button>
+          <button onClick={handleWithdraw}>
+            Withdraw commitment
+          </button>
         )}
       </div>
 
