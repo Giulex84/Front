@@ -83,15 +83,18 @@ const Dashboard: React.FC = () => {
 
       <div style={{ marginTop: "2rem" }}>
         <button
-          style={{
-            padding: "0.75rem 1.5rem",
-            fontSize: "1rem",
-            cursor: "pointer",
-          }}
-          disabled
-        >
-          Create new pact
-        </button>
+  style={{
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    cursor: "pointer",
+  }}
+  onClick={() => {
+    window.location.href = "/create";
+  }}
+>
+  Create new pact
+</button>
+
       </div>
     </div>
   );
