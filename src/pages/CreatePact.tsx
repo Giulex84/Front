@@ -25,6 +25,13 @@ const CreatePact: React.FC = () => {
         It is not a legal or financial contract.
       </p>
 
+      {/* Micro-copy di tutela */}
+      <p style={{ fontSize: "0.9rem", opacity: 0.75, marginBottom: "1.5rem" }}>
+        Take a moment to review the commitment carefully.
+        <br />
+        PactPI encourages thoughtful and transparent agreements.
+      </p>
+
       <div style={{ display: "grid", gap: "1rem" }}>
         <div>
           <label>Commitment title</label>
