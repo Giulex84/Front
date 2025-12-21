@@ -26,16 +26,19 @@ const Login: React.FC = () => {
         participants.
       </p>
 
-      <button
-        style={{
-          padding: "0.75rem 1.5rem",
-          fontSize: "1rem",
-          cursor: "pointer",
-        }}
-        disabled
-      >
-        Login with Pi (coming soon)
-      </button>
+        <button
+  style={{
+    padding: "0.75rem 1.5rem",
+    fontSize: "1rem",
+    cursor: "pointer",
+  }}
+  onClick={() => {
+    window.location.href = "/dashboard";
+  }}
+>
+  Login with Pi
+</button>
+
     </div>
   );
 };
