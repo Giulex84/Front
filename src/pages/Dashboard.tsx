@@ -1,4 +1,5 @@
 import React from "react";
+import Header from "../components/Header";
 
 type CommitmentStatus =
   | "Awaiting agreement"
@@ -35,92 +36,96 @@ const mockCommitments: Commitment[] = [
 ];
 
 const partnerMiniSignals = [
-  "Reliable Partner",
+  "Reliable partner",
   "Limited history",
 ];
 
 const Dashboard: React.FC = () => {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        padding: "2rem",
-        maxWidth: "720px",
-        margin: "0 auto",
-      }}
-    >
-      <h1 style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>
-        My Commitments
-      </h1>
+    <>
+      <Header />
 
-      {mockCommitments.length === 0 ? (
-        <p>
-          You haven’t created or joined any commitments yet.
-          <br />
-          A pact begins with intention.
-        </p>
-      ) : (
-        <div>
-          {mockCommitments.map((commitment) => (
-            <div
-              key={commitment.id}
-              style={{
-                border: "1px solid #e0e0e0",
-                borderRadius: "8px",
-                padding: "1rem",
-                marginBottom: "1rem",
-                cursor: "pointer",
-              }}
-              onClick={() => {
-                window.location.href = "/pact";
-              }}
-            >
-              <h3 style={{ marginBottom: "0.5rem" }}>
-                {commitment.title}
-              </h3>
+      <div
+        style={{
+          minHeight: "100vh",
+          padding: "2rem",
+          maxWidth: "720px",
+          margin: "0 auto",
+        }}
+      >
+        <h1 style={{ fontSize: "2rem", marginBottom: "1.5rem" }}>
+          My Commitments
+        </h1>
 
-              <p style={{ marginBottom: "0.25rem", opacity: 0.8 }}>
-                With: {commitment.partner}
-              </p>
-
-              <p style={{ fontSize: "0.9rem", fontWeight: 500 }}>
-                Status: {commitment.status}
-              </p>
-
-              {/* Mini Trust Signals */}
+        {mockCommitments.length === 0 ? (
+          <p>
+            You haven’t created or joined any commitments yet.
+            <br />
+            A pact begins with intention.
+          </p>
+        ) : (
+          <div>
+            {mockCommitments.map((commitment) => (
               <div
+                key={commitment.id}
                 style={{
-                  marginTop: "0.5rem",
-                  fontSize: "0.85rem",
-                  opacity: 0.75,
+                  border: "1px solid #e0e0e0",
+                  borderRadius: "8px",
+                  padding: "1rem",
+                  marginBottom: "1rem",
+                  cursor: "pointer",
+                }}
+                onClick={() => {
+                  window.location.href = "/pact";
                 }}
               >
-                {partnerMiniSignals.map((signal, index) => (
-                  <span key={index} style={{ marginRight: "0.75rem" }}>
-                    • {signal}
-                  </span>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
+                <h3 style={{ marginBottom: "0.5rem" }}>
+                  {commitment.title}
+                </h3>
 
-      <div style={{ marginTop: "2rem" }}>
-        <button
-          style={{
-            padding: "0.75rem 1.5rem",
-            fontSize: "1rem",
-            cursor: "pointer",
-          }}
-          onClick={() => {
-            window.location.href = "/create";
-          }}
-        >
-          Create new pact
-        </button>
+                <p style={{ marginBottom: "0.25rem", opacity: 0.8 }}>
+                  With: {commitment.partner}
+                </p>
+
+                <p style={{ fontSize: "0.9rem", fontWeight: 500 }}>
+                  Status: {commitment.status}
+                </p>
+
+                {/* Mini trust signals */}
+                <div
+                  style={{
+                    marginTop: "0.5rem",
+                    fontSize: "0.85rem",
+                    opacity: 0.75,
+                  }}
+                >
+                  {partnerMiniSignals.map((signal, index) => (
+                    <span key={index} style={{ marginRight: "0.75rem" }}>
+                      • {signal}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        <div style={{ marginTop: "2rem" }}>
+          <button
+            style={{
+              padding: "0.75rem 1.5rem",
+              fontSize: "1rem",
+              cursor: "pointer",
+            }}
+            onClick={() => {
+              window.location.href = "/create";
+            }}
+          >
+            Create new pact
+          </button>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
