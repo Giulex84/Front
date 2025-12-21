@@ -2,6 +2,7 @@ import React from "react";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
+import CreatePact from "./pages/CreatePact";
 
 const App: React.FC = () => {
   const path = window.location.pathname;
@@ -12,6 +13,10 @@ const App: React.FC = () => {
 
   if (path === "/dashboard") {
     return <Dashboard />;
+  }
+
+  if (path === "/create") {
+    return <CreatePact />;
   }
 
   return <Home />;
