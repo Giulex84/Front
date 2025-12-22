@@ -1,56 +1,30 @@
+import Footer from "../components/Footer";
 
-import React from "react";
-
-const Home: React.FC = () => {
+export default function Home() {
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        alignItems: "center",
-        textAlign: "center",
-        padding: "2rem",
-      }}
-    >
-      <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
-        Trust is not automatic.
-        <br />
-        Pacts are.
-      </h1>
+    <>
+      <main style={{ padding: "32px", maxWidth: "720px", margin: "0 auto" }}>
+        <h1>PactPI</h1>
 
-      <p style={{ fontSize: "1.2rem", marginBottom: "1rem" }}>
-        Create meaningful commitments with other Pi users.
-      </p>
+        <p style={{ marginTop: "16px", fontSize: "18px" }}>
+          Trust is not automatic. Pacts are.
+        </p>
 
-      <p
-        style={{
-          fontSize: "1rem",
-          maxWidth: "480px",
-          marginBottom: "2rem",
-          opacity: 0.8,
-        }}
-      >
-        A pact is a mutual agreement built on identity and responsibility,
-        <br />
-        not a financial contract.
-      </p>
+        <p style={{ marginTop: "24px", lineHeight: 1.6 }}>
+          PactPI lets users create mutual digital commitments based on trust,
+          responsibility, and transparency. It is not a legal or financial
+          contract.
+        </p>
 
-      <button
-        style={{
-          padding: "0.75rem 1.5rem",
-          fontSize: "1rem",
-          cursor: "pointer",
-        }}
-        onClick={() => {
-          window.location.href = "/login";
-        }}
-      >
-        Enter PactPI
-      </button>
-    </div>
+        <div style={{ marginTop: "32px" }}>
+          <a href="/login">
+            <button>Enter PactPI</button>
+          </a>
+        </div>
+      </main>
+
+      {/* Footer SOLO in Home */}
+      <Footer />
+    </>
   );
-};
-
-export default Home;
+}
