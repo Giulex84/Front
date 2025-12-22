@@ -1,4 +1,5 @@
 import React from "react";
+
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
@@ -9,26 +10,17 @@ import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
 
 const App: React.FC = () => {
-  const path = window.location.pathname.replace(/\/+$/, "");
+  const path = window.location.pathname;
 
-  switch (path) {
-    case "/login":
-      return <Login />;
-    case "/dashboard":
-      return <Dashboard />;
-    case "/create":
-      return <CreatePact />;
-    case "/pact":
-      return <PactDetail />;
-    case "/profile":
-      return <Profile />;
-    case "/privacy":
-      return <Privacy />;
-    case "/terms":
-      return <Terms />;
-    default:
-      return <Home />;
-  }
+  if (path === "/login") return <Login />;
+  if (path === "/dashboard") return <Dashboard />;
+  if (path === "/create") return <CreatePact />;
+  if (path === "/pact") return <PactDetail />;
+  if (path === "/profile") return <Profile />;
+  if (path === "/privacy") return <Privacy />;
+  if (path === "/terms") return <Terms />;
+
+  return <Home />;
 };
 
 export default App;
