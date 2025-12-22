@@ -9,17 +9,20 @@ import Profile from "../pages/Profile";
 import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
 
+const routes: Record<string, React.FC> = {
+  "/login": Login,
+  "/dashboard": Dashboard,
+  "/create": CreatePact,
+  "/pact": PactDetail,
+  "/profile": Profile,
+  "/privacy": Privacy,
+  "/terms": Terms,
+};
 
 const App: React.FC = () => {
   const path = window.location.pathname;
-
-  if (path === "/login") return <Login />;
-  if (path === "/dashboard") return <Dashboard />;
-  if (path === "/create") return <CreatePact />;
-  if (path === "/pact") return <PactDetail />;
-  if (path === "/profile") return <Profile />;
-
-  return <Home />;
+  const Page = routes[path] || Home;
+  return <Page />;
 };
 
 export default App;
