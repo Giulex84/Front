@@ -1,5 +1,4 @@
 import React from "react";
-
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
@@ -9,20 +8,27 @@ import Profile from "../pages/Profile";
 import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
 
-const routes: Record<string, React.FC> = {
-  "/login": Login,
-  "/dashboard": Dashboard,
-  "/create": CreatePact,
-  "/pact": PactDetail,
-  "/profile": Profile,
-  "/privacy": Privacy,
-  "/terms": Terms,
-};
-
 const App: React.FC = () => {
-  const path = window.location.pathname;
-  const Page = routes[path] || Home;
-  return <Page />;
+  const path = window.location.pathname.replace(/\/+$/, "");
+
+  switch (path) {
+    case "/login":
+      return <Login />;
+    case "/dashboard":
+      return <Dashboard />;
+    case "/create":
+      return <CreatePact />;
+    case "/pact":
+      return <PactDetail />;
+    case "/profile":
+      return <Profile />;
+    case "/privacy":
+      return <Privacy />;
+    case "/terms":
+      return <Terms />;
+    default:
+      return <Home />;
+  }
 };
 
 export default App;
