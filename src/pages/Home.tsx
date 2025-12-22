@@ -1,38 +1,56 @@
-export default function Home() {
+
+import React from "react";
+
+const Home: React.FC = () => {
   return (
-    <main style={{ maxWidth: 720, margin: "3rem auto", padding: "0 1rem" }}>
-      <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>
-        Pactpi
+    <div
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+        textAlign: "center",
+        padding: "2rem",
+      }}
+    >
+      <h1 style={{ fontSize: "2.5rem", marginBottom: "1rem" }}>
+        Trust is not automatic.
+        <br />
+        Pacts are.
       </h1>
 
-      <p style={{ fontSize: "1.1rem", lineHeight: 1.6, marginBottom: "2rem" }}>
-        Create, review, and confirm digital agreements with clarity and accountability.
+      <p style={{ fontSize: "1.2rem", marginBottom: "1rem" }}>
+        Create meaningful commitments with other Pi users.
       </p>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2>What this is</h2>
-        <p>
-          Pactpi is a practical tool to formalize agreements inside the Pi ecosystem.
-          No legal noise. No complexity. Just clear commitments.
-        </p>
-      </section>
+      <p
+        style={{
+          fontSize: "1rem",
+          maxWidth: "480px",
+          marginBottom: "2rem",
+          opacity: 0.8,
+        }}
+      >
+        A pact is a mutual agreement built on identity and responsibility,
+        <br />
+        not a financial contract.
+      </p>
 
-      <section style={{ marginBottom: "2rem" }}>
-        <h2>What you can do</h2>
-        <ul>
-          <li>Create a digital agreement</li>
-          <li>Share it with another party</li>
-          <li>Confirm it using Pi</li>
-        </ul>
-      </section>
-
-      <section>
-        <h2>Start</h2>
-        <p>
-          Go to <strong>Agreements</strong> to create your first commitment.
-        </p>
-      </section>
-    </main>
+      <button
+        style={{
+          padding: "0.75rem 1.5rem",
+          fontSize: "1rem",
+          cursor: "pointer",
+        }}
+        onClick={() => {
+          window.location.href = "/login";
+        }}
+      >
+        Enter PactPI
+      </button>
+    </div>
   );
-}
+};
 
+export default Home;

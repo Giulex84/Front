@@ -1,23 +1,22 @@
-import { useEffect } from "react";
-import { BrowserRouter } from "react-router-dom";
-import { usePi } from "../pi/usePi";
-import MainLayout from "../layouts/MainLayout";
-import AppRouter from "./AppRouter";
+import React from "react";
 
-function App() {
-  const { isPi } = usePi();
+import Home from "../pages/Home";
+import Login from "../pages/Login";
+import Dashboard from "../pages/Dashboard";
+import CreatePact from "../pages/CreatePact";
+import PactDetail from "../pages/PactDetail";
+import Profile from "../pages/Profile";
 
-  useEffect(() => {
-    console.log("Pi Browser:", isPi);
-  }, [isPi]);
+const App: React.FC = () => {
+  const path = window.location.pathname;
 
-  return (
-    <BrowserRouter>
-      <MainLayout>
-        <AppRouter />
-      </MainLayout>
-    </BrowserRouter>
-  );
-}
+  if (path === "/login") return <Login />;
+  if (path === "/dashboard") return <Dashboard />;
+  if (path === "/create") return <CreatePact />;
+  if (path === "/pact") return <PactDetail />;
+  if (path === "/profile") return <Profile />;
+
+  return <Home />;
+};
 
 export default App;
