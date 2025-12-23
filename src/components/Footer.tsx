@@ -12,9 +12,7 @@ export default function Footer() {
       <a href="/privacy" style={{ marginRight: "16px" }}>
         Privacy Policy
       </a>
-      <a href="/terms">
-        Terms of Service
-      </a>
+      <a href="/terms">Terms of Service</a>
     </footer>
   );
 }
