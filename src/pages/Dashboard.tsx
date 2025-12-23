@@ -91,6 +91,25 @@ const Dashboard: React.FC = () => {
                 <p style={{ fontSize: "0.8rem", opacity: 0.6 }}>
                   Created: {new Date(pact.createdAt).toLocaleString()}
                 </p>
+<div style={{ marginTop: "2rem", opacity: 0.85 }}>
+  <hr style={{ marginBottom: "1rem" }} />
+
+  <p style={{ fontSize: "0.9rem" }}>
+    Pi Network requires a one-time verification transaction.
+  </p>
+
+  <Link
+    to="/verify"
+    style={{
+      display: "inline-block",
+      marginTop: "0.5rem",
+      color: "#6b4eff",
+      fontWeight: 500,
+    }}
+  >
+    App Verification (Pi Test Payment)
+  </Link>
+</div>
 
                 <div style={{ marginTop: "0.75rem" }}>
                   <button
