@@ -16,7 +16,7 @@ const VerifyPi: React.FC = () => {
     setError(null);
 
     try {
-      const payment = await window.Pi.createPayment(
+      await window.Pi.createPayment(
         {
           amount: 0.01,
           memo: "PactPi app verification transaction",
@@ -25,9 +25,6 @@ const VerifyPi: React.FC = () => {
           },
         },
         {
-          onReadyForServerApproval: () => {
-            // Backend not required for test
-          },
           onReadyForServerCompletion: () => {
             setSuccess(true);
             setLoading(false);
@@ -36,16 +33,13 @@ const VerifyPi: React.FC = () => {
             setError("Transaction cancelled");
             setLoading(false);
           },
-          onError: (err: any) => {
+          onError: () => {
             setError("Payment error");
             setLoading(false);
           },
         }
       );
-
-      console.log("Payment initiated:", payment);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Failed to start payment");
       setLoading(false);
     }
@@ -71,15 +65,10 @@ const VerifyPi: React.FC = () => {
         </p>
 
         <p style={{ fontSize: "0.9rem", opacity: 0.75 }}>
-          This transaction is not a payment, does not unlock features, and is
-          required only for app verification.
+          This transaction is not a payment and does not unlock features.
         </p>
 
-        {success ? (
-          <p style={{ color: "green", marginTop: "1.5rem" }}>
-            ✅ Verification transaction completed successfully.
-          </p>
-        ) : (
+        {!success ? (
           <button
             onClick={handleVerifyPayment}
             disabled={loading}
@@ -92,6 +81,10 @@ const VerifyPi: React.FC = () => {
           >
             {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
           </button>
+        ) : (
+          <p style={{ color: "green", marginTop: "2rem" }}>
+            ✅ Verification transaction completed successfully.
+          </p>
         )}
 
         {error && (
