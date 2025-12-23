@@ -1,23 +1,16 @@
 export async function piLogin() {
-  if (!window.Pi) {
-    throw new Error("Pi SDK not available");
+  if (!(window as any).Pi) {
+    throw new Error('Pi SDK not available');
   }
 
-  try {
-    const auth = await window.Pi.authenticate(
-      ['username'],
-      () => {
-        // incomplete payments handler (vuoto per ora)
-      }
-    );
+  const scopes = ['username'];
 
-    console.log("Pi auth success:", auth);
+  const auth = await window.Pi.authenticate(scopes, () => {
+    console.log('Incomplete payment found');
+  });
 
-    // ✅ IMPORTANTE: ritorniamo qualcosa
-    return auth;
+  // LOG IMPORTANTISSIMO (per debug)
+  console.log('Pi auth success:', auth);
 
-  } catch (err) {
-    console.error("Pi auth failed:", err);
-    throw err;
-  }
+  return auth;
 }
