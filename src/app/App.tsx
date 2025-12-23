@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Home from "../pages/Home";
-import Login from "../pages/Login";
 import Dashboard from "../pages/Dashboard";
 import CreatePact from "../pages/CreatePact";
 import PactDetail from "../pages/PactDetail";
@@ -10,9 +9,20 @@ import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
 
 const App: React.FC = () => {
-  const path = window.location.pathname;
+  const [authenticated, setAuthenticated] = useState(false);
 
-  if (path === "/login") return <Login />;
+  useEffect(() => {
+    if (window.Pi) {
+      setAuthenticated(true);
+    }
+  }, []);
+
+  if (!authenticated) {
+    return <Home />;
+  }
+
+  const path = window.location.pathname.replace(/\/+$/, "");
+
   if (path === "/dashboard") return <Dashboard />;
   if (path === "/create") return <CreatePact />;
   if (path === "/pact") return <PactDetail />;
