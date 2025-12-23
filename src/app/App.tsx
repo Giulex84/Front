@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import { piLogin } from '../services/piAuth';
 import AppRouter from './AppRouter';
+import { piLogin } from '../services/piAuth';
 
 export default function App() {
   const [ready, setReady] = useState(false);
@@ -11,20 +11,21 @@ export default function App() {
 
     async function init() {
       try {
+        if (!(window as any).Pi) {
+          throw new Error('Open this app in Pi Browser');
+        }
+
         const auth = await piLogin();
 
-        if (!auth || !auth.user) {
-          throw new Error("Invalid Pi auth response");
-        }
+        console.log('Authenticated user:', auth.user);
 
         if (mounted) {
           setReady(true);
         }
-
-      } catch (err) {
+      } catch (err: any) {
         console.error(err);
         if (mounted) {
-          setError('Please open this app in Pi Browser');
+          setError(err.message || 'Authentication failed');
         }
       }
     }
@@ -41,7 +42,7 @@ export default function App() {
   }
 
   if (!ready) {
-    return <div style={{ padding: 20 }}>Connecting to Pi Network…</div>;
+    return <div style={{ padding: 20 }}>Connecting to Pi Network...</div>;
   }
 
   return <AppRouter />;
