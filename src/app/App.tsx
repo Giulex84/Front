@@ -1,36 +1,27 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+import { piLogin } from '../services/piAuth';
+import AppRouter from './AppRouter';
 
-import Home from "../pages/Home";
-import Dashboard from "../pages/Dashboard";
-import CreatePact from "../pages/CreatePact";
-import PactDetail from "../pages/PactDetail";
-import Profile from "../pages/Profile";
-import Privacy from "../pages/Privacy";
-import Terms from "../pages/Terms";
-
-const App: React.FC = () => {
-  const [authenticated, setAuthenticated] = useState(false);
+export default function App() {
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    if (window.Pi) {
-      setAuthenticated(true);
+    async function init() {
+      try {
+        await piLogin();
+        setReady(true);
+      } catch (err) {
+        console.error(err);
+        alert('Open this app in Pi Browser');
+      }
     }
+
+    init();
   }, []);
 
-  if (!authenticated) {
-    return <Home />;
+  if (!ready) {
+    return <div>Connecting to Pi Network...</div>;
   }
 
-  const path = window.location.pathname.replace(/\/+$/, "");
-
-  if (path === "/dashboard") return <Dashboard />;
-  if (path === "/create") return <CreatePact />;
-  if (path === "/pact") return <PactDetail />;
-  if (path === "/profile") return <Profile />;
-  if (path === "/privacy") return <Privacy />;
-  if (path === "/terms") return <Terms />;
-
-  return <Home />;
-};
-
-export default App;
+  return <AppRouter />;
+}
