@@ -1,13 +1,13 @@
+const scopes = ['username'];
+
 export async function piLogin() {
   if (!window.Pi) {
-    throw new Error("Pi SDK not available. Use Pi Browser.");
+    throw new Error('Pi SDK not available. Open app in Pi Browser.');
   }
 
-  const scopes = ["username"];
-
-  const authResult = await window.Pi.authenticate(scopes, () => {
-    console.log("Pi authentication cancelled");
+  const auth = await window.Pi.authenticate(scopes, () => {
+    console.log('Incomplete payment found');
   });
 
-  return authResult;
+  return auth;
 }
