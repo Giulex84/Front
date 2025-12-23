@@ -1,13 +1,23 @@
-const scopes = ['username'];
-
 export async function piLogin() {
   if (!window.Pi) {
-    throw new Error('Pi SDK not available. Open app in Pi Browser.');
+    throw new Error("Pi SDK not available");
   }
 
-  const auth = await window.Pi.authenticate(scopes, () => {
-    console.log('Incomplete payment found');
-  });
+  try {
+    const auth = await window.Pi.authenticate(
+      ['username'],
+      () => {
+        // incomplete payments handler (vuoto per ora)
+      }
+    );
 
-  return auth;
+    console.log("Pi auth success:", auth);
+
+    // ✅ IMPORTANTE: ritorniamo qualcosa
+    return auth;
+
+  } catch (err) {
+    console.error("Pi auth failed:", err);
+    throw err;
+  }
 }
