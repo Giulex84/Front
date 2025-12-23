@@ -5,26 +5,29 @@ import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
 import { PiUser } from "./App";
 
-type Props = {
+type AppRouterProps = {
   user: PiUser | null;
 };
 
-export default function AppRouter({ user }: Props) {
+export default function AppRouter({ user }: AppRouterProps) {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Pagine pubbliche */}
-        <Route path="/" element={user ? <Navigate to="/dashboard" /> : <Home />} />
+        {/* Public */}
+        <Route
+          path="/"
+          element={user ? <Navigate to="/dashboard" /> : <Home />}
+        />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
 
-        {/* Pagine protette */}
+        {/* Protected */}
         <Route
           path="/dashboard"
           element={user ? <Dashboard /> : <Navigate to="/" />}
         />
 
-        {/* Fallback */}
+        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
