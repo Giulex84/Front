@@ -1,11 +1,42 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../components/Header";
 
+type Pact = {
+  id: string;
+  title: string;
+  description: string;
+  partner: string;
+  createdAt: string;
+};
+
 const CreatePact: React.FC = () => {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [partner, setPartner] = useState("");
   const [confirmed, setConfirmed] = useState(false);
+
+  const handleSubmit = () => {
+    if (!confirmed || !title || !partner) return;
+
+    const newPact: Pact = {
+      id: crypto.randomUUID(),
+      title,
+      description,
+      partner,
+      createdAt: new Date().toISOString(),
+    };
+
+    const existing = localStorage.getItem("pacts");
+    const pacts: Pact[] = existing ? JSON.parse(existing) : [];
+
+    pacts.push(newPact);
+    localStorage.setItem("pacts", JSON.stringify(pacts));
+
+    navigate("/dashboard");
+  };
 
   return (
     <>
@@ -29,7 +60,6 @@ const CreatePact: React.FC = () => {
           It is not a legal or financial contract.
         </p>
 
-        {/* User awareness micro-copy */}
         <p
           style={{
             fontSize: "0.9rem",
@@ -93,6 +123,7 @@ const CreatePact: React.FC = () => {
 
         <div style={{ marginTop: "2rem" }}>
           <button
+            onClick={handleSubmit}
             disabled={!confirmed || !title || !partner}
             style={{
               padding: "0.75rem 1.5rem",
