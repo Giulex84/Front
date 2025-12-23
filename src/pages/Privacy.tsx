@@ -1,35 +1,12 @@
-import React from "react";
-
-const Privacy: React.FC = () => {
+export default function Privacy() {
   return (
-    <div style={{ maxWidth: "800px", margin: "0 auto", padding: "24px" }}>
+    <main style={{ padding: "2rem", maxWidth: 720, margin: "0 auto" }}>
       <h1>Privacy Policy</h1>
-
       <p>
-        PactPI respects user privacy and is designed with transparency and minimal
-        data usage in mind.
+        PactPI does not collect personal data for commercial purposes. User
+        authentication is handled via Pi Network SDK. No data is sold or shared
+        with third parties.
       </p>
-
-      <p>
-        The application does not collect personal data for commercial purposes.
-        No data is sold, shared, or used for advertising.
-      </p>
-
-      <p>
-        When authentication is enabled, it is handled through the Pi Network SDK.
-        PactPI does not store Pi wallet credentials or private keys.
-      </p>
-
-      <p>
-        User activity data is used only to display informational trust signals
-        within the application.
-      </p>
-
-      <p>
-        By using PactPI, users acknowledge and accept this privacy policy.
-      </p>
-    </div>
+    </main>
   );
-};
-
-export default Privacy;
+}
