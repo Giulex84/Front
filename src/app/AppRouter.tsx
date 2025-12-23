@@ -3,7 +3,7 @@ import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
-import { PiUser } from "./App";
+import type { PiUser } from "./App";
 
 type AppRouterProps = {
   user: PiUser | null;
@@ -27,7 +27,6 @@ export default function AppRouter({ user }: AppRouterProps) {
           element={user ? <Dashboard /> : <Navigate to="/" />}
         />
 
-        {/* Catch-all */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
