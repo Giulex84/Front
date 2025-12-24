@@ -1,11 +1,13 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import Home from "../pages/Home";
 import Dashboard from "../pages/Dashboard";
 import CreatePact from "../pages/CreatePact";
 import Profile from "../pages/Profile";
-import VerifyPi from "../pages/VerifyPi";
 import Privacy from "../pages/Privacy";
 import Terms from "../pages/Terms";
+import VerifyPi from "../pages/VerifyPi";
+
 import type { PiUser } from "./App";
 
 type AppRouterProps = {
@@ -16,7 +18,7 @@ export default function AppRouter({ user }: AppRouterProps) {
   return (
     <BrowserRouter>
       <Routes>
-        {/* Public */}
+        {/* PUBLIC */}
         <Route
           path="/"
           element={user ? <Navigate to="/dashboard" /> : <Home />}
@@ -24,7 +26,7 @@ export default function AppRouter({ user }: AppRouterProps) {
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/terms" element={<Terms />} />
 
-        {/* Protected */}
+        {/* PROTECTED */}
         <Route
           path="/dashboard"
           element={user ? <Dashboard /> : <Navigate to="/" />}
@@ -42,7 +44,7 @@ export default function AppRouter({ user }: AppRouterProps) {
           element={user ? <VerifyPi /> : <Navigate to="/" />}
         />
 
-        {/* Fallback */}
+        {/* FALLBACK */}
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
