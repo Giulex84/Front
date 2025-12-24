@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Header: React.FC = () => {
   return (
@@ -15,8 +16,17 @@ const Header: React.FC = () => {
       <strong>PactPI</strong>
 
       <div style={{ display: "flex", gap: "1.5rem", fontSize: "0.9rem" }}>
-        <a href="/dashboard">Dashboard</a>
-        <a href="/profile">Profile</a>
+        <Link to="/dashboard" style={{ textDecoration: "none" }}>
+          Dashboard
+        </Link>
+
+        <Link to="/profile" style={{ textDecoration: "none" }}>
+          Profile
+        </Link>
+
+        <Link to="/verify" style={{ textDecoration: "none" }}>
+          Verify
+        </Link>
       </div>
     </div>
   );
