@@ -6,43 +6,41 @@ const VerifyPi: React.FC = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleVerifyPayment = async () => {
-    if (!window.Pi) {
-      alert("Open this app in Pi Browser");
+  const handleVerifyPayment = () => {
+    if (typeof Pi === "undefined") {
+      alert("Open this app inside Pi Browser");
       return;
     }
 
     setLoading(true);
     setError(null);
 
-    try {
-      await window.Pi.createPayment(
-        {
-          amount: 0.01,
-          memo: "PactPi app verification transaction",
-          metadata: {
-            type: "app_verification",
-          },
+    Pi.createPayment(
+      {
+        amount: 0.01,
+        memo: "PactPI app verification",
+        metadata: {
+          type: "app_verification",
         },
-        {
-          onReadyForServerCompletion: () => {
-            setSuccess(true);
-            setLoading(false);
-          },
-          onCancel: () => {
-            setError("Transaction cancelled");
-            setLoading(false);
-          },
-          onError: () => {
-            setError("Payment error");
-            setLoading(false);
-          },
-        }
-      );
-    } catch {
-      setError("Failed to start payment");
-      setLoading(false);
-    }
+      },
+      {
+        onReadyForServerApproval: () => {
+          // Backend non richiesto per test
+        },
+        onReadyForServerCompletion: () => {
+          setSuccess(true);
+          setLoading(false);
+        },
+        onCancel: () => {
+          setError("Transaction cancelled");
+          setLoading(false);
+        },
+        onError: () => {
+          setError("Payment error");
+          setLoading(false);
+        },
+      }
+    );
   };
 
   return (
@@ -61,11 +59,7 @@ const VerifyPi: React.FC = () => {
 
         <p style={{ marginBottom: "1.5rem", opacity: 0.85 }}>
           Pi Network requires a one-time symbolic transaction to verify that this
-          application is correctly integrated with the Pi SDK.
-        </p>
-
-        <p style={{ fontSize: "0.9rem", opacity: 0.75 }}>
-          This transaction is not a payment and does not unlock features.
+          application is correctly integrated.
         </p>
 
         {!success ? (
@@ -73,7 +67,6 @@ const VerifyPi: React.FC = () => {
             onClick={handleVerifyPayment}
             disabled={loading}
             style={{
-              marginTop: "2rem",
               padding: "0.75rem 1.5rem",
               fontSize: "1rem",
               cursor: loading ? "not-allowed" : "pointer",
@@ -82,7 +75,7 @@ const VerifyPi: React.FC = () => {
             {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
           </button>
         ) : (
-          <p style={{ color: "green", marginTop: "2rem" }}>
+          <p style={{ color: "green", marginTop: "1.5rem" }}>
             ✅ Verification transaction completed successfully.
           </p>
         )}
