@@ -7,26 +7,23 @@ const VerifyPi: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
 
   const handleVerifyPayment = () => {
-    if (typeof Pi === "undefined") {
-      alert("Open this app inside Pi Browser");
+    if (!window.Pi) {
+      alert("Open this app in Pi Browser");
       return;
     }
 
     setLoading(true);
     setError(null);
 
-    Pi.createPayment(
+    window.Pi.createPayment(
       {
         amount: 0.01,
-        memo: "PactPI app verification",
+        memo: "PactPI app verification transaction",
         metadata: {
           type: "app_verification",
         },
       },
       {
-        onReadyForServerApproval: () => {
-          // Backend non richiesto per test
-        },
         onReadyForServerCompletion: () => {
           setSuccess(true);
           setLoading(false);
@@ -57,9 +54,13 @@ const VerifyPi: React.FC = () => {
       >
         <h1>App Verification</h1>
 
-        <p style={{ marginBottom: "1.5rem", opacity: 0.85 }}>
-          Pi Network requires a one-time symbolic transaction to verify that this
-          application is correctly integrated.
+        <p style={{ opacity: 0.85, marginBottom: "1rem" }}>
+          Pi Network requires a one-time symbolic transaction to verify that
+          this application is correctly integrated with the Pi SDK.
+        </p>
+
+        <p style={{ fontSize: "0.9rem", opacity: 0.7 }}>
+          This is not a payment and does not unlock features.
         </p>
 
         {!success ? (
@@ -67,6 +68,7 @@ const VerifyPi: React.FC = () => {
             onClick={handleVerifyPayment}
             disabled={loading}
             style={{
+              marginTop: "2rem",
               padding: "0.75rem 1.5rem",
               fontSize: "1rem",
               cursor: loading ? "not-allowed" : "pointer",
@@ -75,7 +77,7 @@ const VerifyPi: React.FC = () => {
             {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
           </button>
         ) : (
-          <p style={{ color: "green", marginTop: "1.5rem" }}>
+          <p style={{ color: "green", marginTop: "2rem" }}>
             ✅ Verification transaction completed successfully.
           </p>
         )}
