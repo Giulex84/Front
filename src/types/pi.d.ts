@@ -21,8 +21,11 @@ declare global {
           metadata?: any;
         },
         callbacks: {
-          onReadyForServerCompletion?: () => void;
-          onReadyForServerApproval?: () => void;
+          onReadyForServerApproval?: (paymentId: string) => void | Promise<void>;
+          onReadyForServerCompletion?: (
+            paymentId: string,
+            txid?: string
+          ) => void;
           onCancel?: () => void;
           onError?: (error: any) => void;
         }
