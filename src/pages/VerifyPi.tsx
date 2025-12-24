@@ -8,7 +8,7 @@ const VerifyPi: React.FC = () => {
 
   const handleVerifyPayment = () => {
     if (!window.Pi) {
-      alert("Open this app in Pi Browser");
+      alert("Open this app inside Pi Browser");
       return;
     }
 
@@ -18,20 +18,41 @@ const VerifyPi: React.FC = () => {
     window.Pi.createPayment(
       {
         amount: 0.01,
-        memo: "PactPI app verification transaction",
+        memo: "PactPi app verification transaction",
         metadata: {
-          type: "app_verification",
+          purpose: "app_verification",
         },
       },
       {
+        onReadyForServerApproval: async (paymentId: string) => {
+          try {
+            await fetch(
+              "https://pactpi-pi-payment-backend.vercel.app/approve-payment",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ paymentId }),
+              }
+            );
+          } catch (err) {
+            console.error("Backend approval failed", err);
+            setError("Backend approval failed");
+            setLoading(false);
+          }
+        },
+
         onReadyForServerCompletion: () => {
           setSuccess(true);
           setLoading(false);
         },
+
         onCancel: () => {
           setError("Transaction cancelled");
           setLoading(false);
         },
+
         onError: () => {
           setError("Payment error");
           setLoading(false);
@@ -54,13 +75,13 @@ const VerifyPi: React.FC = () => {
       >
         <h1>App Verification</h1>
 
-        <p style={{ opacity: 0.85, marginBottom: "1rem" }}>
-          Pi Network requires a one-time symbolic transaction to verify that
-          this application is correctly integrated with the Pi SDK.
+        <p style={{ marginBottom: "1.5rem", opacity: 0.85 }}>
+          Pi Network requires a one-time symbolic transaction to verify that this
+          application is correctly integrated with the Pi SDK.
         </p>
 
-        <p style={{ fontSize: "0.9rem", opacity: 0.7 }}>
-          This is not a payment and does not unlock features.
+        <p style={{ fontSize: "0.9rem", opacity: 0.75 }}>
+          This transaction is not a payment and does not unlock features.
         </p>
 
         {!success ? (
