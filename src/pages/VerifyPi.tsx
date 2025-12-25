@@ -7,7 +7,6 @@ declare global {
 }
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
-const PI_APP_ID = import.meta.env.VITE_PI_APP_ID;
 
 export default function VerifyPi() {
   const [status, setStatus] = useState<string | null>(null);
