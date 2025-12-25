@@ -22,7 +22,7 @@ const VerifyPi: React.FC = () => {
       const auth = await (window as any).Pi.authenticate(["payments"]);
 
       // 2️⃣ CREATE PAYMENT (backend)
-      const createRes = await fetch(`${BACKEND_URL}/api/pi/create`, {
+      await fetch(`${BACKEND_URL}/api/pi/create`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -30,8 +30,6 @@ const VerifyPi: React.FC = () => {
           username: auth.user.username,
         }),
       });
-
-      const { paymentId } = await createRes.json();
 
       // 3️⃣ OPEN PI WALLET
       await (window as any).Pi.createPayment(
