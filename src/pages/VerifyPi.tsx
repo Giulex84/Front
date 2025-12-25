@@ -1,6 +1,14 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
+declare global {
+  interface Window {
+    Pi: any;
+  }
+}
+
+const BACKEND_URL = "https://pactpi-pi-payment-backend.vercel.app";
+
 const VerifyPi: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -8,7 +16,7 @@ const VerifyPi: React.FC = () => {
 
   const handleVerifyPayment = async () => {
     if (!window.Pi) {
-      alert("Open this app from Pi Browser");
+      alert("Open this app in Pi Browser");
       return;
     }
 
@@ -16,43 +24,30 @@ const VerifyPi: React.FC = () => {
     setError(null);
 
     try {
-      // 1️⃣ AUTHENTICATE FIRST (MANDATORY)
-      const auth = await window.Pi.authenticate(["payments"]);
-
-      // 2️⃣ CREATE PAYMENT (ONLY AFTER AUTH)
-      await window.Pi.createPayment(
+      window.Pi.createPayment(
         {
           amount: 0.01,
           memo: "PactPI app verification",
-          metadata: {
-            type: "app_verification",
-            username: auth.user.username,
-          },
+          metadata: { type: "verification" },
         },
         {
           onReadyForServerApproval: async (paymentId: string) => {
-            await fetch(
-              "https://pactpi-pi-payment-backend.vercel.app/api/pi/approve",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ paymentId }),
-              }
-            );
+            await fetch(`${BACKEND_URL}/api/pi/approve`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId }),
+            });
           },
 
           onReadyForServerCompletion: async (
             paymentId: string,
             txid?: string
           ) => {
-            await fetch(
-              "https://pactpi-pi-payment-backend.vercel.app/api/pi/complete",
-              {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ paymentId, txid }),
-              }
-            );
+            await fetch(`${BACKEND_URL}/api/pi/complete`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ paymentId, txid }),
+            });
 
             setSuccess(true);
             setLoading(false);
@@ -78,6 +73,7 @@ const VerifyPi: React.FC = () => {
   return (
     <>
       <Header />
+
       <div
         style={{
           minHeight: "100vh",
@@ -88,7 +84,7 @@ const VerifyPi: React.FC = () => {
       >
         <h1>App Verification</h1>
 
-        <p style={{ opacity: 0.85 }}>
+        <p style={{ opacity: 0.85, marginBottom: "1.5rem" }}>
           Pi Network requires a one-time symbolic transaction to verify that
           this application is correctly integrated with the Pi SDK.
         </p>
@@ -113,7 +109,7 @@ const VerifyPi: React.FC = () => {
         )}
 
         {success && (
-          <p style={{ color: "green", marginTop: "1.5rem" }}>
+          <p style={{ color: "green", marginTop: "2rem" }}>
             ✅ Verification transaction completed successfully.
           </p>
         )}
