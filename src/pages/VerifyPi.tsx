@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 declare global {
   interface Window {
     Pi: any;
@@ -7,14 +5,11 @@ declare global {
 }
 
 export default function VerifyPi() {
-  const [error, setError] = useState<string | null>(null);
   const backend = import.meta.env.VITE_BACKEND_URL;
 
   const verify = async () => {
-    setError(null);
-
     try {
-      await window.Pi.createPayment(
+      const payment = await window.Pi.createPayment(
         {
           amount: 0.01,
           memo: "App verification",
@@ -37,24 +32,22 @@ export default function VerifyPi() {
             });
           },
 
-          onCancel: () => {
-            setError("Transaction cancelled");
-          },
-
-          onError: (err: any) => {
-            setError(err?.message || "Payment error");
+          onCancel: () => alert("Transaction cancelled"),
+          onError: (e: any) => {
+            console.error(e);
+            alert("Payment error");
           }
         }
       );
-    } catch {
-      setError("Failed to start payment");
+    } catch (e) {
+      console.error(e);
+      alert("Failed to start payment");
     }
   };
 
   return (
-    <div>
-      <button onClick={verify}>Verify with Pi (0.01 Pi)</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
+    <button onClick={verify}>
+      Verify with Pi (0.01 Pi)
+    </button>
   );
 }
