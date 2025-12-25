@@ -1,42 +1,35 @@
-import React, { useState } from "react";
-import Header from "../components/Header";
+import { useState } from "react";
+
+declare global {
+  interface Window {
+    Pi: any;
+  }
+}
 
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const PI_APP_ID = import.meta.env.VITE_PI_APP_ID;
 
-const VerifyPi: React.FC = () => {
+export default function VerifyPi() {
+  const [status, setStatus] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [success, setSuccess] = useState(false);
 
   const startVerification = async () => {
-    if (!(window as any).Pi) {
-      alert("Open this app in Pi Browser");
+    if (!window.Pi) {
+      setStatus("Pi SDK not available");
       return;
     }
 
     setLoading(true);
-    setError(null);
+    setStatus(null);
 
     try {
-      // 1️⃣ AUTH
-      const auth = await (window as any).Pi.authenticate(["payments"]);
+      await window.Pi.authenticate(["payments"], () => {});
 
-      // 2️⃣ CREATE PAYMENT (backend)
-      await fetch(`${BACKEND_URL}/api/pi/create`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          uid: auth.user.uid,
-          username: auth.user.username,
-        }),
-      });
-
-      // 3️⃣ OPEN PI WALLET
-      await (window as any).Pi.createPayment(
+      await window.Pi.createPayment(
         {
           amount: 0.01,
-          memo: "PactPi app verification",
-          metadata: { type: "app_verification" },
+          memo: "App verification",
+          metadata: { type: "verification" },
         },
         {
           onReadyForServerApproval: async (paymentId: string) => {
@@ -47,63 +40,52 @@ const VerifyPi: React.FC = () => {
             });
           },
 
-          onReadyForServerCompletion: async (paymentId: string, txid: string) => {
+          onReadyForServerCompletion: async (
+            paymentId: string,
+            txid?: string
+          ) => {
             await fetch(`${BACKEND_URL}/api/pi/complete`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify({ paymentId, txid }),
             });
 
-            setSuccess(true);
+            setStatus("Verification completed ✅");
             setLoading(false);
           },
 
           onCancel: () => {
-            setError("Transaction cancelled");
+            setStatus("Transaction cancelled");
             setLoading(false);
           },
 
-          onError: () => {
-            setError("Payment error");
+          onError: (error: any) => {
+            console.error(error);
+            setStatus("Failed to verify payment");
             setLoading(false);
           },
         }
       );
-    } catch {
-      setError("Failed to start payment");
+    } catch (err) {
+      console.error(err);
+      setStatus("Failed to start payment");
       setLoading(false);
     }
   };
 
   return (
-    <>
-      <Header />
-      <div style={{ maxWidth: 720, margin: "0 auto", padding: "2rem" }}>
-        <h1>App Verification</h1>
+    <div style={{ padding: 24 }}>
+      <h1>App Verification</h1>
+      <p>
+        Pi Network requires a one-time symbolic transaction to verify that this
+        application is correctly integrated with the Pi SDK.
+      </p>
 
-        <p>
-          Pi Network requires a one-time symbolic transaction to verify that this
-          application is correctly integrated with the Pi SDK.
-        </p>
+      <button onClick={startVerification} disabled={loading}>
+        {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
+      </button>
 
-        {!success ? (
-          <button
-            onClick={startVerification}
-            disabled={loading}
-            style={{ marginTop: "2rem", padding: "1rem 2rem", fontSize: "1rem" }}
-          >
-            {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
-          </button>
-        ) : (
-          <p style={{ color: "green", marginTop: "2rem" }}>
-            ✅ Verification completed successfully
-          </p>
-        )}
-
-        {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
-      </div>
-    </>
+      {status && <p style={{ marginTop: 12, color: "red" }}>{status}</p>}
+    </div>
   );
-};
-
-export default VerifyPi;
+}
