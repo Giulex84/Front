@@ -1,21 +1,15 @@
 import React, { useState } from "react";
 import Header from "../components/Header";
 
-declare global {
-  interface Window {
-    Pi: any;
-  }
-}
-
-const BACKEND_URL = "https://pactpi-pi-payment-backend.vercel.app";
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
 
 const VerifyPi: React.FC = () => {
   const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState(false);
 
-  const handleVerifyPayment = async () => {
-    if (!window.Pi) {
+  const startVerification = async () => {
+    if (!(window as any).Pi) {
       alert("Open this app in Pi Browser");
       return;
     }
@@ -24,11 +18,27 @@ const VerifyPi: React.FC = () => {
     setError(null);
 
     try {
-      window.Pi.createPayment(
+      // 1️⃣ AUTH
+      const auth = await (window as any).Pi.authenticate(["payments"]);
+
+      // 2️⃣ CREATE PAYMENT (backend)
+      const createRes = await fetch(`${BACKEND_URL}/api/pi/create`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uid: auth.user.uid,
+          username: auth.user.username,
+        }),
+      });
+
+      const { paymentId } = await createRes.json();
+
+      // 3️⃣ OPEN PI WALLET
+      await (window as any).Pi.createPayment(
         {
           amount: 0.01,
-          memo: "PactPI app verification",
-          metadata: { type: "verification" },
+          memo: "PactPi app verification",
+          metadata: { type: "app_verification" },
         },
         {
           onReadyForServerApproval: async (paymentId: string) => {
@@ -39,10 +49,7 @@ const VerifyPi: React.FC = () => {
             });
           },
 
-          onReadyForServerCompletion: async (
-            paymentId: string,
-            txid?: string
-          ) => {
+          onReadyForServerCompletion: async (paymentId: string, txid: string) => {
             await fetch(`${BACKEND_URL}/api/pi/complete`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -73,50 +80,29 @@ const VerifyPi: React.FC = () => {
   return (
     <>
       <Header />
-
-      <div
-        style={{
-          minHeight: "100vh",
-          padding: "2rem",
-          maxWidth: "720px",
-          margin: "0 auto",
-        }}
-      >
+      <div style={{ maxWidth: 720, margin: "0 auto", padding: "2rem" }}>
         <h1>App Verification</h1>
 
-        <p style={{ opacity: 0.85, marginBottom: "1.5rem" }}>
-          Pi Network requires a one-time symbolic transaction to verify that
-          this application is correctly integrated with the Pi SDK.
+        <p>
+          Pi Network requires a one-time symbolic transaction to verify that this
+          application is correctly integrated with the Pi SDK.
         </p>
 
-        <p style={{ opacity: 0.75 }}>
-          This transaction is not a payment and does not unlock features.
-        </p>
-
-        {!success && (
+        {!success ? (
           <button
-            onClick={handleVerifyPayment}
+            onClick={startVerification}
             disabled={loading}
-            style={{
-              marginTop: "2rem",
-              padding: "0.75rem 1.5rem",
-              fontSize: "1rem",
-              cursor: loading ? "not-allowed" : "pointer",
-            }}
+            style={{ marginTop: "2rem", padding: "1rem 2rem", fontSize: "1rem" }}
           >
             {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
           </button>
-        )}
-
-        {success && (
+        ) : (
           <p style={{ color: "green", marginTop: "2rem" }}>
-            ✅ Verification transaction completed successfully.
+            ✅ Verification completed successfully
           </p>
         )}
 
-        {error && (
-          <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>
-        )}
+        {error && <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>}
       </div>
     </>
   );
