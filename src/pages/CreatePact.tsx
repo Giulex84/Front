@@ -1,97 +1,90 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function CreatePact() {
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [category, setCategory] = useState("");
+  const [offer, setOffer] = useState("");
+  const [expectation, setExpectation] = useState("");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    // Per ora NON salviamo nulla (review-safe)
-    console.log("New pact:", { title, description, category });
+    // ⚠️ NO payments, NO blockchain action here
+    // Just create a pact draft (backend / future persistence)
+    console.log({
+      title,
+      description,
+      offer,
+      expectation,
+    });
 
-    alert("Pact created (demo).");
-  };
+    navigate("/agreements");
+  }
 
   return (
-    <main style={{ padding: "2rem", maxWidth: "800px", margin: "0 auto" }}>
-      <h1>Create a new pact</h1>
-
-      <p style={{ marginBottom: "1.5rem" }}>
-        A pact is a clear, transparent agreement between people.  
-        It helps others understand what you offer and builds trust over time.
-      </p>
-
-      {/* DISCLAIMER IMPORTANTISSIMO */}
-      <div
-        style={{
-          background: "#f5f5f5",
-          padding: "1rem",
-          borderRadius: "8px",
-          marginBottom: "2rem",
-        }}
-      >
-        <strong>PactPI does not process payments.</strong>
-        <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
-          This platform only helps you describe an agreement.  
-          Any compensation or exchange is decided independently between users.
+    <main className="page">
+      <header className="page-header">
+        <h1>Create a pact</h1>
+        <p className="text-muted">
+          Describe a clear agreement. PactPI does not handle payments — only
+          commitments and reputation.
         </p>
-      </div>
+      </header>
 
-      <form onSubmit={handleSubmit}>
-        {/* TITLE */}
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label>
-            <strong>Pact title</strong>
-          </label>
+      <form className="form" onSubmit={handleSubmit}>
+        <div className="form-group">
+          <label>Pact title</label>
           <input
-            type="text"
+            required
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            placeholder="e.g. Pi DApp development support"
-            required
-            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
+            placeholder="e.g. Web design support for Pi dApp"
           />
         </div>
 
-        {/* CATEGORY */}
-        <div style={{ marginBottom: "1.5rem" }}>
-          <label>
-            <strong>Category</strong>
-          </label>
-          <select
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
-            required
-            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
-          >
-            <option value="">Select a category</option>
-            <option value="development">Development</option>
-            <option value="design">Design</option>
-            <option value="content">Content & Writing</option>
-            <option value="consulting">Consulting</option>
-            <option value="other">Other</option>
-          </select>
-        </div>
-
-        {/* DESCRIPTION */}
-        <div style={{ marginBottom: "2rem" }}>
-          <label>
-            <strong>Description</strong>
-          </label>
+        <div className="form-group">
+          <label>Description</label>
           <textarea
+            required
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            placeholder="Describe clearly what you offer, what is expected, and any important conditions."
-            required
-            rows={5}
-            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
+            placeholder="Describe the context and purpose of this pact"
           />
         </div>
 
-        {/* SUBMIT */}
-        <button type="submit">Create pact</button>
+        <div className="form-group">
+          <label>What you offer</label>
+          <textarea
+            required
+            value={offer}
+            onChange={(e) => setOffer(e.target.value)}
+            placeholder="What service, help, or contribution you provide"
+          />
+        </div>
+
+        <div className="form-group">
+          <label>What you expect</label>
+          <textarea
+            required
+            value={expectation}
+            onChange={(e) => setExpectation(e.target.value)}
+            placeholder="What the other party commits to"
+          />
+        </div>
+
+        <div className="form-actions">
+          <button type="submit">Create pact</button>
+          <button
+            type="button"
+            className="secondary"
+            onClick={() => navigate(-1)}
+          >
+            Cancel
+          </button>
+        </div>
       </form>
     </main>
   );
