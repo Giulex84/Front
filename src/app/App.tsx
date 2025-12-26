@@ -26,5 +26,5 @@ export default function App() {
     return <div>Connecting to Pi Network...</div>;
   }
 
-  return <AppRouter user={user} />;
+  return <AppRouter />;
 }
