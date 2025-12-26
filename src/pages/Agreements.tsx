@@ -1,19 +1,27 @@
 import { Link } from "react-router-dom";
 import Badge from "../components/Badge";
+import type { BadgeType } from "../components/Badge";
+
+type Pact = {
+  id: string;
+  title: string;
+  description: string;
+  badge: BadgeType;
+};
 
 export default function Agreements() {
-  const agreements = [
+  const agreements: Pact[] = [
     {
       id: "1",
       title: "Web design support for Pi dApp",
       description: "Design UI components and landing pages.",
-      badge: "Reliable" as const,
+      badge: "Active",
     },
     {
       id: "2",
       title: "Smart contract review",
       description: "Review logic and edge cases for Pi-based contracts.",
-      badge: "New" as const,
+      badge: "New",
     },
   ];
 
