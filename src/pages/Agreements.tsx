@@ -1,47 +1,60 @@
 import { Link } from "react-router-dom";
-
-const MOCK_PACTS = [
-  {
-    id: "1",
-    title: "Web design support for Pi dApp",
-    description: "Design UI components and landing pages.",
-    badge: "Reliable",
-  },
-  {
-    id: "2",
-    title: "Smart contract review",
-    description: "Review logic and edge cases for Pi contracts.",
-    badge: "New",
-  },
-];
+import Badge from "../components/Badge";
 
 export default function Agreements() {
+  const agreements = [
+    {
+      id: "1",
+      title: "Web design support for Pi dApp",
+      description: "Design UI components and landing pages.",
+      badge: "Reliable" as const,
+    },
+    {
+      id: "2",
+      title: "Smart contract review",
+      description: "Review logic and edge cases for Pi-based contracts.",
+      badge: "New" as const,
+    },
+  ];
+
   return (
-    <main className="container">
+    <main
+      className="page"
+      style={{
+        padding: "3rem 1.5rem",
+        maxWidth: "960px",
+        margin: "0 auto",
+      }}
+    >
       <header className="page-header">
         <h1>Pacts</h1>
-        <p className="muted">
+        <p className="text-muted">
           Public agreements help build trust through transparency.
         </p>
       </header>
 
-      <div className="list">
-        {MOCK_PACTS.map((pact) => (
-          <div key={pact.id} className="card pact-card">
-            <div>
-              <h3>{pact.title}</h3>
-              <p>{pact.description}</p>
-              <span className={`badge ${pact.badge.toLowerCase()}`}>
-                {pact.badge}
-              </span>
-            </div>
+      <section style={{ display: "grid", gap: "2rem" }}>
+        {agreements.map((pact) => (
+          <div key={pact.id} className="card">
+            <h2 style={{ marginBottom: "0.5rem" }}>{pact.title}</h2>
+            <p style={{ marginBottom: "1rem" }}>{pact.description}</p>
 
-            <Link to={`/pact/${pact.id}`} className="details-link">
-              View details →
-            </Link>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <Badge type={pact.badge} />
+
+              <Link to={`/pact/${pact.id}`}>
+                View details →
+              </Link>
+            </div>
           </div>
         ))}
-      </div>
+      </section>
     </main>
   );
 }
