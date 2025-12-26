@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import Badge, { BadgeType } from "../components/Badge";
+import Badge from "../components/Badge";
+import type { BadgeType } from "../components/Badge";
 
 const mockAgreements = [
   {
@@ -34,14 +35,7 @@ export default function Agreements() {
 
       <div style={{ display: "grid", gap: "1.5rem" }}>
         {mockAgreements.map((a) => (
-          <div
-            key={a.id}
-            style={{
-              padding: "1.5rem",
-              border: "1px solid #ddd",
-              borderRadius: "8px",
-            }}
-          >
+          <div key={a.id} className="card">
             <h3>{a.title}</h3>
             <p>{a.description}</p>
 
