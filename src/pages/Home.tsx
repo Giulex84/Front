@@ -2,68 +2,99 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <main style={{ padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
+    <main
+      style={{
+        padding: "3rem 1.5rem",
+        maxWidth: "960px",
+        margin: "0 auto",
+      }}
+    >
       {/* HERO */}
-      <section style={{ marginBottom: "3rem" }}>
-        <h1>Digital agreements built on trust.</h1>
-        <p style={{ fontSize: "1.1rem", marginTop: "1rem" }}>
+      <section style={{ marginBottom: "4rem" }}>
+        <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>
+          Digital agreements built on trust.
+        </h1>
+
+        <p
+          style={{
+            fontSize: "1.15rem",
+            maxWidth: "720px",
+            color: "var(--text-muted)",
+          }}
+        >
           Create clear digital pacts, build reputation, and connect with reliable
           people in the Pi ecosystem.
         </p>
       </section>
 
       {/* INTRO */}
-      <section style={{ marginBottom: "2.5rem" }}>
+      <section style={{ marginBottom: "3rem", maxWidth: "760px" }}>
         <p>
-          <strong>PactPI</strong> is a platform designed to help people create
-          digital agreements (<em>pacts</em>) and build trust over time.
+          <strong>PactPI</strong> helps people describe agreements in a clear and
+          transparent way, allowing trust to grow through consistent behavior
+          and accountability.
         </p>
 
         <p style={{ marginTop: "1rem" }}>
-          Users can describe what they offer, define commitments, and interact
-          transparently with others — all without intermediaries.
+          The platform focuses on clarity, reputation, and long-term trust — not
+          on transactions or intermediaries.
         </p>
       </section>
 
-      {/* IMPORTANT DISCLAIMER */}
+      {/* DISCLAIMER */}
       <section
-        style={{
-          padding: "1.5rem",
-          background: "#f5f5f5",
-          borderRadius: "8px",
-          marginBottom: "2.5rem",
-        }}
+        className="disclaimer"
+        style={{ marginBottom: "4rem", maxWidth: "760px" }}
       >
         <strong>PactPI does not process payments.</strong>
         <p style={{ marginTop: "0.5rem" }}>
-          Users independently decide how to fulfill agreements and handle any
-          compensation outside the platform.
+          Users independently decide how to fulfill agreements and manage any
+          form of compensation outside the platform.
         </p>
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ marginBottom: "2.5rem" }}>
-        <h2>How PactPI works</h2>
-        <ol style={{ marginTop: "1rem" }}>
-          <li>
-            <strong>Create a pact</strong> – Clearly describe an agreement,
-            collaboration, or service you are offering.
-          </li>
-          <li>
-            <strong>Build trust</strong> – Reliability is reflected through
-            completed pacts and community feedback.
-          </li>
-          <li>
-            <strong>Stay transparent</strong> – Public agreements help others
-            evaluate trustworthiness.
-          </li>
-        </ol>
+      <section style={{ marginBottom: "4rem" }}>
+        <h2 style={{ marginBottom: "1.5rem" }}>How PactPI works</h2>
+
+        <div
+          style={{
+            display: "grid",
+            gap: "1.5rem",
+            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+          }}
+        >
+          <div className="card">
+            <h3>Create a pact</h3>
+            <p>
+              Describe clearly what you offer, what is expected, and the scope
+              of the agreement.
+            </p>
+          </div>
+
+          <div className="card">
+            <h3>Build trust</h3>
+            <p>
+              Reliability is reflected over time through completed agreements
+              and community participation.
+            </p>
+          </div>
+
+          <div className="card">
+            <h3>Stay transparent</h3>
+            <p>
+              Public pacts help others understand commitments and evaluate
+              trustworthiness.
+            </p>
+          </div>
+        </div>
       </section>
 
       {/* WHY */}
-      <section style={{ marginBottom: "3rem" }}>
-        <h2>Why PactPI</h2>
-        <ul style={{ marginTop: "1rem" }}>
+      <section style={{ marginBottom: "4rem", maxWidth: "760px" }}>
+        <h2 style={{ marginBottom: "1.5rem" }}>Why PactPI</h2>
+
+        <ul style={{ paddingLeft: "1.2rem" }}>
           <li>No intermediaries</li>
           <li>No managed payments</li>
           <li>Transparency over promises</li>
@@ -73,7 +104,7 @@ export default function Home() {
       </section>
 
       {/* CTA */}
-      <section style={{ marginBottom: "4rem" }}>
+      <section style={{ marginBottom: "5rem" }}>
         <Link to="/agreements">
           <button style={{ marginRight: "1rem" }}>
             Create your first pact
@@ -81,17 +112,27 @@ export default function Home() {
         </Link>
 
         <Link to="/about">
-          <button>Learn how PactPI works</button>
+          <button className="secondary">
+            Learn how PactPI works
+          </button>
         </Link>
       </section>
 
       {/* FOOTER */}
-      <footer style={{ fontSize: "0.9rem", opacity: 0.8 }}>
+      <footer
+        style={{
+          paddingTop: "2rem",
+          borderTop: "1px solid var(--border)",
+          fontSize: "0.9rem",
+          color: "var(--text-muted)",
+        }}
+      >
         <p>
           PactPI is an independent platform for digital agreements and
           reputation.
         </p>
-        <p>
+
+        <p style={{ marginTop: "0.5rem" }}>
           <Link to="/privacy">Privacy Policy</Link> ·{" "}
           <Link to="/terms">Terms of Service</Link>
         </p>
