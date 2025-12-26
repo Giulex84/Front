@@ -4,15 +4,29 @@ export default function Home() {
   return (
     <main
       style={{
-        padding: "3rem 1.5rem",
+        padding: "3.5rem 1.5rem",
         maxWidth: "960px",
         margin: "0 auto",
       }}
     >
       {/* HERO */}
       <section style={{ marginBottom: "4rem" }}>
-        <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>
-          Digital agreements built on trust.
+        <p
+          style={{
+            textTransform: "uppercase",
+            fontSize: "0.85rem",
+            letterSpacing: "0.08em",
+            color: "var(--text-muted)",
+            marginBottom: "0.75rem",
+          }}
+        >
+          Digital agreements for the Pi ecosystem
+        </p>
+
+        <h1 style={{ fontSize: "2.6rem", marginBottom: "1rem" }}>
+          Clear agreements,
+          <br />
+          built on trust.
         </h1>
 
         <p
@@ -22,33 +36,40 @@ export default function Home() {
             color: "var(--text-muted)",
           }}
         >
-          Create clear digital pacts, build reputation, and connect with reliable
-          people in the Pi ecosystem.
+          PactPI lets people create clear digital pacts, build reputation, and
+          collaborate with reliable users inside the Pi Network.
         </p>
       </section>
 
       {/* INTRO */}
-      <section style={{ marginBottom: "3rem", maxWidth: "760px" }}>
+      <section style={{ marginBottom: "3.5rem", maxWidth: "760px" }}>
         <p>
-          <strong>PactPI</strong> helps people describe agreements in a clear and
-          transparent way, allowing trust to grow through consistent behavior
-          and accountability.
+          <strong>PactPI</strong> is a platform to describe commitments in a
+          transparent way, helping trust grow through consistent behavior and
+          accountability.
         </p>
 
         <p style={{ marginTop: "1rem" }}>
-          The platform focuses on clarity, reputation, and long-term trust — not
-          on transactions or intermediaries.
+          This platform focuses on clarity and reputation — not transactions,
+          payments, or intermediaries.
         </p>
       </section>
 
       {/* DISCLAIMER */}
       <section
         className="disclaimer"
-        style={{ marginBottom: "4rem", maxWidth: "760px" }}
+        style={{
+          marginBottom: "4rem",
+          maxWidth: "760px",
+          padding: "1.25rem",
+          border: "1px solid var(--border)",
+          borderRadius: "12px",
+          background: "var(--surface-muted)",
+        }}
       >
         <strong>PactPI does not process payments.</strong>
         <p style={{ marginTop: "0.5rem" }}>
-          Users independently decide how to fulfill agreements and manage any
+          Users independently decide how to fulfill agreements and handle any
           form of compensation outside the platform.
         </p>
       </section>
@@ -76,7 +97,7 @@ export default function Home() {
             <h3>Build trust</h3>
             <p>
               Reliability is reflected over time through completed agreements
-              and community participation.
+              and community feedback.
             </p>
           </div>
 
@@ -93,7 +114,6 @@ export default function Home() {
       {/* WHY */}
       <section style={{ marginBottom: "4rem", maxWidth: "760px" }}>
         <h2 style={{ marginBottom: "1.5rem" }}>Why PactPI</h2>
-
         <ul style={{ paddingLeft: "1.2rem" }}>
           <li>No intermediaries</li>
           <li>No managed payments</li>
@@ -112,9 +132,7 @@ export default function Home() {
         </Link>
 
         <Link to="/about">
-          <button className="secondary">
-            Learn how PactPI works
-          </button>
+          <button className="secondary">Learn how PactPI works</button>
         </Link>
       </section>
 
