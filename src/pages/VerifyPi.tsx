@@ -9,7 +9,7 @@ export default function VerifyPi() {
 
   const verify = async () => {
     try {
-      const payment = await window.Pi.createPayment(
+      await window.Pi.createPayment(
         {
           amount: 0.01,
           memo: "App verification",
@@ -24,7 +24,10 @@ export default function VerifyPi() {
             });
           },
 
-          onReadyForServerCompletion: async (paymentId: string, txid: string) => {
+          onReadyForServerCompletion: async (
+            paymentId: string,
+            txid?: string
+          ) => {
             await fetch(`${backend}/api/pi/complete`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
@@ -32,7 +35,10 @@ export default function VerifyPi() {
             });
           },
 
-          onCancel: () => alert("Transaction cancelled"),
+          onCancel: () => {
+            alert("Transaction cancelled");
+          },
+
           onError: (e: any) => {
             console.error(e);
             alert("Payment error");
