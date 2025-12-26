@@ -1,57 +1,46 @@
 import { Link } from "react-router-dom";
 
+const MOCK_PACTS = [
+  {
+    id: "1",
+    title: "Web design support for Pi dApp",
+    description: "Design UI components and landing pages.",
+    badge: "Reliable",
+  },
+  {
+    id: "2",
+    title: "Smart contract review",
+    description: "Review logic and edge cases for Pi contracts.",
+    badge: "New",
+  },
+];
+
 export default function Agreements() {
   return (
-    <main
-      style={{
-        maxWidth: "960px",
-        margin: "0 auto",
-        padding: "3rem 1.5rem",
-      }}
-    >
-      <h1 style={{ marginBottom: "0.5rem" }}>Pacts</h1>
-      <p style={{ color: "#555", marginBottom: "3rem" }}>
-        Public agreements help build trust through transparency.
-      </p>
+    <main className="container">
+      <header className="page-header">
+        <h1>Pacts</h1>
+        <p className="muted">
+          Public agreements help build trust through transparency.
+        </p>
+      </header>
 
-      <div style={{ display: "grid", gap: "2rem" }}>
-        <div className="card">
-          <h2>Web design support for Pi dApp</h2>
-          <p>
-            Design UI components and landing pages for a Pi Network application.
-          </p>
+      <div className="list">
+        {MOCK_PACTS.map((pact) => (
+          <div key={pact.id} className="card pact-card">
+            <div>
+              <h3>{pact.title}</h3>
+              <p>{pact.description}</p>
+              <span className={`badge ${pact.badge.toLowerCase()}`}>
+                {pact.badge}
+              </span>
+            </div>
 
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <span className="badge badge-reliable">Reliable</span>
-            <Link to="/pact/1">View details →</Link>
+            <Link to={`/pact/${pact.id}`} className="details-link">
+              View details →
+            </Link>
           </div>
-        </div>
-
-        <div className="card">
-          <h2>Smart contract review</h2>
-          <p>
-            Review logic and edge cases for Pi-based smart contracts.
-          </p>
-
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: "1rem",
-            }}
-          >
-            <span className="badge badge-new">New</span>
-            <Link to="/pact/2">View details →</Link>
-          </div>
-        </div>
+        ))}
       </div>
     </main>
   );
