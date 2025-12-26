@@ -1,144 +1,98 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Header from "../components/Header";
+import { useState } from "react";
 
-type Pact = {
-  id: string;
-  title: string;
-  description: string;
-  partner: string;
-  createdAt: string;
-};
-
-const CreatePact: React.FC = () => {
-  const navigate = useNavigate();
-
+export default function CreatePact() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [partner, setPartner] = useState("");
-  const [confirmed, setConfirmed] = useState(false);
+  const [category, setCategory] = useState("");
 
-  const handleSubmit = () => {
-    if (!confirmed || !title || !partner) return;
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
 
-    const newPact: Pact = {
-      id: crypto.randomUUID(),
-      title,
-      description,
-      partner,
-      createdAt: new Date().toISOString(),
-    };
+    // Per ora NON salviamo nulla (review-safe)
+    console.log("New pact:", { title, description, category });
 
-    const existing = localStorage.getItem("pacts");
-    const pacts: Pact[] = existing ? JSON.parse(existing) : [];
-
-    pacts.push(newPact);
-    localStorage.setItem("pacts", JSON.stringify(pacts));
-
-    navigate("/dashboard");
+    alert("Pact created (demo).");
   };
 
   return (
-    <>
-      <Header />
+    <main style={{ padding: "2rem", maxWidth: "800px", margin: "0 auto" }}>
+      <h1>Create a new pact</h1>
 
+      <p style={{ marginBottom: "1.5rem" }}>
+        A pact is a clear, transparent agreement between people.  
+        It helps others understand what you offer and builds trust over time.
+      </p>
+
+      {/* DISCLAIMER IMPORTANTISSIMO */}
       <div
         style={{
-          minHeight: "100vh",
-          padding: "2rem",
-          maxWidth: "720px",
-          margin: "0 auto",
+          background: "#f5f5f5",
+          padding: "1rem",
+          borderRadius: "8px",
+          marginBottom: "2rem",
         }}
       >
-        <h1 style={{ fontSize: "2rem", marginBottom: "1rem" }}>
-          Create a Pact
-        </h1>
-
-        <p style={{ marginBottom: "1.5rem", opacity: 0.8 }}>
-          A pact is a mutual commitment based on trust and responsibility.
-          <br />
-          It is not a legal or financial contract.
+        <strong>PactPI does not process payments.</strong>
+        <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
+          This platform only helps you describe an agreement.  
+          Any compensation or exchange is decided independently between users.
         </p>
-
-        <p
-          style={{
-            fontSize: "0.9rem",
-            opacity: 0.75,
-            marginBottom: "1.5rem",
-          }}
-        >
-          Take a moment to review the commitment carefully.
-          <br />
-          PactPI encourages thoughtful and transparent agreements.
-        </p>
-
-        <div style={{ display: "grid", gap: "1.25rem" }}>
-          <div>
-            <label>Commitment title</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              placeholder="e.g. Deliver website design within 7 days"
-              style={{ width: "100%", padding: "0.6rem" }}
-            />
-          </div>
-
-          <div>
-            <label>Commitment description</label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              placeholder="Clearly describe what you are committing to."
-              style={{
-                width: "100%",
-                padding: "0.6rem",
-                minHeight: "110px",
-              }}
-            />
-          </div>
-
-          <div>
-            <label>Partner Pi username</label>
-            <input
-              type="text"
-              value={partner}
-              onChange={(e) => setPartner(e.target.value)}
-              placeholder="Pi username"
-              style={{ width: "100%", padding: "0.6rem" }}
-            />
-          </div>
-
-          <div style={{ fontSize: "0.9rem" }}>
-            <label>
-              <input
-                type="checkbox"
-                checked={confirmed}
-                onChange={(e) => setConfirmed(e.target.checked)}
-              />{" "}
-              I understand this is a mutual commitment, not a financial contract.
-            </label>
-          </div>
-        </div>
-
-        <div style={{ marginTop: "2rem" }}>
-          <button
-            onClick={handleSubmit}
-            disabled={!confirmed || !title || !partner}
-            style={{
-              padding: "0.75rem 1.5rem",
-              fontSize: "1rem",
-              cursor:
-                confirmed && title && partner ? "pointer" : "not-allowed",
-              opacity: confirmed && title && partner ? 1 : 0.6,
-            }}
-          >
-            Create Pact
-          </button>
-        </div>
       </div>
-    </>
-  );
-};
 
-export default CreatePact;
+      <form onSubmit={handleSubmit}>
+        {/* TITLE */}
+        <div style={{ marginBottom: "1.5rem" }}>
+          <label>
+            <strong>Pact title</strong>
+          </label>
+          <input
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="e.g. Pi DApp development support"
+            required
+            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
+          />
+        </div>
+
+        {/* CATEGORY */}
+        <div style={{ marginBottom: "1.5rem" }}>
+          <label>
+            <strong>Category</strong>
+          </label>
+          <select
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
+          >
+            <option value="">Select a category</option>
+            <option value="development">Development</option>
+            <option value="design">Design</option>
+            <option value="content">Content & Writing</option>
+            <option value="consulting">Consulting</option>
+            <option value="other">Other</option>
+          </select>
+        </div>
+
+        {/* DESCRIPTION */}
+        <div style={{ marginBottom: "2rem" }}>
+          <label>
+            <strong>Description</strong>
+          </label>
+          <textarea
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Describe clearly what you offer, what is expected, and any important conditions."
+            required
+            rows={5}
+            style={{ width: "100%", padding: "0.6rem", marginTop: "0.5rem" }}
+          />
+        </div>
+
+        {/* SUBMIT */}
+        <button type="submit">Create pact</button>
+      </form>
+    </main>
+  );
+}
