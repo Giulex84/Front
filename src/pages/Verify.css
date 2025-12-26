@@ -1,0 +1,67 @@
+.verify {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f6f7f9;
+  padding: 2rem;
+}
+
+.verify_card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2.5rem;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  text-align: center;
+}
+
+.verify_card h1 {
+  margin: 0 0 0.75rem;
+  font-size: 1.75rem;
+  letter-spacing: -0.02em;
+}
+
+.verify_description {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.verify_amount {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1.75rem;
+  color: #111;
+}
+
+.verify_button {
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 999px;
+  border: none;
+  background: #111;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.verify_button:hover:not(:disabled) {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+}
+
+.verify_button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.verify_error {
+  margin-top: 1.25rem;
+  color: #c0392b;
+  font-size: 0.95rem;
+}
