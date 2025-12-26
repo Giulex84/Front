@@ -1,8 +1,7 @@
-// src/app/App.tsx
-
 import { useEffect, useState } from "react";
 import AppRouter from "./AppRouter";
-import { piLogin, PiUser } from "../services/piAuth";
+import { piLogin } from "../services/piAuth";
+import type { PiUser } from "../services/piAuth";
 
 export default function App() {
   const [user, setUser] = useState<PiUser | null>(null);
@@ -11,10 +10,10 @@ export default function App() {
   useEffect(() => {
     async function init() {
       try {
-        const auth = await piLogin();
-        setUser(auth.user);
+        const u = await piLogin();
+        setUser(u);
       } catch (err) {
-        console.error("Pi login failed", err);
+        console.error(err);
       } finally {
         setLoading(false);
       }
