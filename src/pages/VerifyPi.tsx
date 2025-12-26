@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 declare global {
   interface Window {
     Pi: any;
@@ -5,55 +7,67 @@ declare global {
 }
 
 export default function VerifyPi() {
-  const backend = import.meta.env.VITE_BACKEND_URL;
+  const [error, setError] = useState<string | null>(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
-  const verify = async () => {
+  const startVerification = async () => {
+    setError(null);
+
+    if (!window.Pi) {
+      setError("Pi SDK not available. Open app in Pi Browser.");
+      return;
+    }
+
     try {
-      await window.Pi.createPayment(
+      window.Pi.createPayment(
         {
           amount: 0.01,
-          memo: "App verification",
-          metadata: { type: "verify" }
+          memo: "PactPI App Verification",
+          metadata: { purpose: "verify" },
         },
         {
           onReadyForServerApproval: async (paymentId: string) => {
-            await fetch(`${backend}/api/pi/approve`, {
+            await fetch(`${backendUrl}/api/pi/approve`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ paymentId })
+              body: JSON.stringify({ paymentId }),
             });
           },
 
           onReadyForServerCompletion: async (
             paymentId: string,
-            txid?: string
+            txid: string
           ) => {
-            await fetch(`${backend}/api/pi/complete`, {
+            await fetch(`${backendUrl}/api/pi/complete`, {
               method: "POST",
               headers: { "Content-Type": "application/json" },
-              body: JSON.stringify({ paymentId, txid })
+              body: JSON.stringify({ paymentId, txid }),
             });
           },
 
           onCancel: () => {
-            alert("Transaction cancelled");
+            setError("Transaction cancelled");
           },
 
-          onError: (e: any) => {
-            console.error(e);
-            alert("Payment error");
-          }
+          onError: (err: any) => {
+            console.error(err);
+            setError("Payment error");
+          },
         }
       );
     } catch (e) {
       console.error(e);
-      alert("Failed to start payment");
+      setError("Failed to start payment");
     }
   };
 
   return (
-    <button onClick={verify}>
-      Verify with Pi (0.01 Pi)
-    </button>
+    <div style={{ padding: 20 }}>
+      <button onClick={startVerification}>
+        Verify with Pi (0.01 Pi)
+      </button>
+
+      {error && <p style={{ color: "red" }}>{error}</p>}
+    </div>
   );
 }
