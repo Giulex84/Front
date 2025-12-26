@@ -1,6 +1,9 @@
-type BadgeType = "Verified" | "Active" | "New" | "Community";
+export type BadgeType = "Verified" | "Active" | "New" | "Community";
 
-const badgeStyles: Record<BadgeType, { label: string; bg: string; color: string }> = {
+const styles: Record<
+  BadgeType,
+  { bg: string; color: string; label: string }
+> = {
   Verified: { label: "Verified", bg: "#E6F4EA", color: "#137333" },
   Active: { label: "Active", bg: "#E8F0FE", color: "#1A73E8" },
   New: { label: "New", bg: "#FEF7E0", color: "#B06000" },
@@ -8,7 +11,7 @@ const badgeStyles: Record<BadgeType, { label: string; bg: string; color: string 
 };
 
 export default function Badge({ type }: { type: BadgeType }) {
-  const s = badgeStyles[type];
+  const s = styles[type];
   return (
     <span
       style={{
@@ -27,5 +30,3 @@ export default function Badge({ type }: { type: BadgeType }) {
     </span>
   );
 }
-
-export type { BadgeType };
