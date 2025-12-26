@@ -1,4 +1,7 @@
 {
-  "app_id": "pactpi",
-  "environment": "testnet"
+  "name": "PactPI",
+  "description": "PactPI verification app",
+  "type": "app",
+  "api_version": "2.0",
+  "permissions": ["payments"]
 }
