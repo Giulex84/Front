@@ -15,7 +15,6 @@ export default function Agreements() {
       </p>
 
       <div style={{ display: "grid", gap: "2rem" }}>
-        {/* Pact 1 */}
         <div className="card">
           <h2>Web design support for Pi dApp</h2>
           <p>
@@ -35,7 +34,6 @@ export default function Agreements() {
           </div>
         </div>
 
-        {/* Pact 2 */}
         <div className="card">
           <h2>Smart contract review</h2>
           <p>
