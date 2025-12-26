@@ -11,11 +11,14 @@ declare global {
         },
         callbacks: {
           onReadyForServerApproval: (paymentId: string) => void;
-          onReadyForServerCompletion: (paymentId: string, txid: string) => void;
+          onReadyForServerCompletion: (
+            paymentId: string,
+            txid: string
+          ) => void;
           onCancel?: () => void;
           onError?: (error: any) => void;
         }
-      ) => Promise<void>;
+      ) => void;
     };
   }
 }
