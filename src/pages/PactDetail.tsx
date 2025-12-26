@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
-import Badge, { BadgeType } from "../components/Badge";
+import Badge from "../components/Badge";
+import type { BadgeType } from "../components/Badge";
 
 const mockPact = {
   id: "1",
@@ -26,14 +27,7 @@ export default function PactDetail() {
         </p>
       </section>
 
-      <section
-        style={{
-          padding: "1rem",
-          border: "1px solid #ddd",
-          borderRadius: "8px",
-          marginBottom: "2rem",
-        }}
-      >
+      <section className="card" style={{ marginBottom: "2rem" }}>
         <p>
           Offered by <strong>{mockPact.owner.username}</strong>
         </p>
@@ -52,16 +46,9 @@ export default function PactDetail() {
         </p>
       </section>
 
-      <section
-        style={{
-          background: "#f5f5f5",
-          padding: "1.25rem",
-          borderRadius: "8px",
-          marginBottom: "2.5rem",
-        }}
-      >
+      <section className="disclaimer" style={{ marginBottom: "2.5rem" }}>
         <strong>PactPI does not process payments.</strong>
-        <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
+        <p style={{ marginTop: "0.5rem" }}>
           The platform only helps users describe agreements and assess
           reliability. Any compensation is decided independently.
         </p>
@@ -69,7 +56,7 @@ export default function PactDetail() {
 
       <section>
         <Link to="/agreements">
-          <button style={{ marginRight: "1rem" }}>
+          <button className="secondary" style={{ marginRight: "1rem" }}>
             Back to agreements
           </button>
         </Link>
