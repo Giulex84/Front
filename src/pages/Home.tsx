@@ -64,7 +64,7 @@ export default function Home() {
       >
         <strong>PactPI does not process payments.</strong>
         <p style={{ marginTop: "0.5rem", color: "#666" }}>
-          Users independently decide how to fulfill agreements and handle any
+          Users independently decide how to fulfill agreements and manage any
           compensation outside the platform.
         </p>
       </section>
@@ -83,24 +83,23 @@ export default function Home() {
           <div className="card">
             <h3>Create a pact</h3>
             <p>
-              Describe what you offer, what is expected, and the scope of the
-              agreement.
+              Describe clearly what you offer, what is expected, and the scope
+              of the agreement.
             </p>
           </div>
 
           <div className="card">
             <h3>Build reputation</h3>
             <p>
-              Reliability is reflected over time through completed agreements
-              and community feedback.
+              Reliability emerges over time through completed agreements and
+              visible behavior.
             </p>
           </div>
 
           <div className="card">
             <h3>Stay transparent</h3>
             <p>
-              Public pacts help others understand commitments and evaluate
-              trustworthiness.
+              Public pacts help others evaluate trustworthiness and intent.
             </p>
           </div>
         </div>
@@ -131,8 +130,7 @@ export default function Home() {
           reputation.
         </p>
         <p style={{ marginTop: "0.5rem" }}>
-          <Link to="/privacy">Privacy Policy</Link>{" "}
-          {" · "}
+          <Link to="/privacy">Privacy Policy</Link> ·{" "}
           <Link to="/terms">Terms of Service</Link>
         </p>
       </footer>
