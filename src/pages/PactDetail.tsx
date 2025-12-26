@@ -1,4 +1,5 @@
 import { useParams, Link } from "react-router-dom";
+import Badge, { BadgeType } from "../components/Badge";
 
 const mockPact = {
   id: "1",
@@ -8,20 +9,16 @@ const mockPact = {
   category: "Development",
   owner: {
     username: "pi_dev_88",
-    badges: ["Verified", "Active"],
+    badges: ["Verified", "Active"] as BadgeType[],
   },
-  createdAt: "2025-01-10",
 };
 
 export default function PactDetail() {
   const { id } = useParams();
-
-  // In futuro: fetch reale con id
   console.log("Viewing pact:", id);
 
   return (
     <main style={{ padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
-      {/* TITLE */}
       <section style={{ marginBottom: "1.5rem" }}>
         <h1>{mockPact.title}</h1>
         <p style={{ opacity: 0.8 }}>
@@ -29,7 +26,6 @@ export default function PactDetail() {
         </p>
       </section>
 
-      {/* OWNER INFO */}
       <section
         style={{
           padding: "1rem",
@@ -43,24 +39,12 @@ export default function PactDetail() {
         </p>
 
         <div style={{ marginTop: "0.5rem" }}>
-          {mockPact.owner.badges.map((badge) => (
-            <span
-              key={badge}
-              style={{
-                padding: "0.25rem 0.6rem",
-                marginRight: "0.5rem",
-                background: "#eee",
-                borderRadius: "12px",
-                fontSize: "0.8rem",
-              }}
-            >
-              {badge}
-            </span>
+          {mockPact.owner.badges.map((b) => (
+            <Badge key={b} type={b} />
           ))}
         </div>
       </section>
 
-      {/* DESCRIPTION */}
       <section style={{ marginBottom: "2rem" }}>
         <h2>About this pact</h2>
         <p style={{ marginTop: "0.75rem", lineHeight: 1.6 }}>
@@ -68,7 +52,6 @@ export default function PactDetail() {
         </p>
       </section>
 
-      {/* DISCLAIMER */}
       <section
         style={{
           background: "#f5f5f5",
@@ -79,20 +62,17 @@ export default function PactDetail() {
       >
         <strong>PactPI does not process payments.</strong>
         <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
-          This platform only helps users describe agreements and assess
-          reliability. Any compensation or exchange is decided independently
-          between the involved parties.
+          The platform only helps users describe agreements and assess
+          reliability. Any compensation is decided independently.
         </p>
       </section>
 
-      {/* ACTIONS */}
       <section>
         <Link to="/agreements">
           <button style={{ marginRight: "1rem" }}>
             Back to agreements
           </button>
         </Link>
-
         <Link to="/profile">
           <button>View profile</button>
         </Link>
