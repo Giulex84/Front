@@ -1,31 +1,21 @@
-// src/services/piAuth.ts
-
-declare global {
-  interface Window {
-    Pi?: any;
-  }
-}
-
 export type PiUser = {
   uid: string;
   username: string;
 };
 
-export async function piLogin(): Promise<{ user: PiUser }> {
-  if (!window.Pi) {
-    throw new Error("Pi SDK not available");
+export async function piLogin(): Promise<PiUser | null> {
+  if (!window.Pi || !window.Pi.authenticate) {
+    return null;
   }
 
   const scopes = ["username"];
 
-  const authResult = await window.Pi.authenticate(scopes, {
+  const result = await window.Pi.authenticate(scopes, {
     onIncompletePaymentFound: () => {},
   });
 
   return {
-    user: {
-      uid: authResult.user.uid,
-      username: authResult.user.username,
-    },
+    uid: result.user.uid,
+    username: result.user.username,
   };
 }
