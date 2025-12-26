@@ -2,6 +2,10 @@ import Header from "../components/Header";
 import Badge from "../components/Badge";
 
 export default function Profile() {
+  const isVerified =
+    typeof window !== "undefined" &&
+    localStorage.getItem("pactpi_verified") === "true";
+
   return (
     <>
       <Header />
@@ -23,55 +27,44 @@ export default function Profile() {
         </p>
 
         <div style={{ marginTop: "0.5rem" }}>
-          <Badge type="Verified" />
+          {isVerified && <Badge type="Verified" />}
           <Badge type="Community" />
         </div>
 
-        <div style={{ marginTop: "1.5rem", fontSize: "0.95rem" }}>
-          <p><strong>Commitments created:</strong> 5</p>
-          <p><strong>Commitments fulfilled:</strong> 3</p>
-          <p><strong>Commitments withdrawn:</strong> 1</p>
-        </div>
+        {!isVerified && (
+          <div
+            className="card"
+            style={{ marginTop: "1.5rem", background: "#fffbe6" }}
+          >
+            <strong>Your profile is not verified</strong>
+            <p style={{ marginTop: "0.5rem", fontSize: "0.9rem" }}>
+              Verification increases trust and visibility.
+            </p>
+
+            <a href="/verify">
+              <button style={{ marginTop: "0.75rem" }}>
+                Verify now
+              </button>
+            </a>
+          </div>
+        )}
 
         <section style={{ marginTop: "2rem" }}>
           <h2 style={{ fontSize: "1.2rem", marginBottom: "0.5rem" }}>
             Trust signals
           </h2>
 
-          <div style={{ display: "grid", gap: "0.75rem" }}>
-            <div
-              style={{
-                border: "1px solid #e0e0e0",
-                borderRadius: "6px",
-                padding: "0.75rem",
-                background: "#f6fffa",
-              }}
-            >
-              <strong>Consistent participant</strong>
-              <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-                Has completed multiple commitments on PactPI.
-              </p>
-            </div>
-
-            <div
-              style={{
-                border: "1px solid #e0e0e0",
-                borderRadius: "6px",
-                padding: "0.75rem",
-                background: "#fafafa",
-              }}
-            >
-              <strong>Limited history</strong>
-              <p style={{ fontSize: "0.9rem", opacity: 0.8 }}>
-                This participant has a limited number of completed pacts.
-              </p>
-            </div>
+          <div className="card">
+            <p>
+              Trust indicators are based on user activity and voluntary
+              verification. They are informational only.
+            </p>
           </div>
         </section>
 
         <p style={{ fontSize: "0.85rem", opacity: 0.7, marginTop: "2rem" }}>
-          Trust signals are informational only and do not represent guarantees or
-          financial advice.
+          Badges represent informational trust signals and do not constitute
+          guarantees.
         </p>
       </main>
     </>
