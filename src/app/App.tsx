@@ -1,21 +1,13 @@
-import { useEffect, useState } from "react";
+// src/app/App.tsx
+
 import AppRouter from "./AppRouter";
-import type { PiUser } from "../types/pi";
-import { piLogin } from "../services/pi/piService";
+import { useBootstrap } from "../hooks/useBootstrap";
 
 export default function App() {
-  const [, setUser] = useState<PiUser | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    piLogin()
-      .then(res => setUser(res.user))
-      .catch(err => console.error("Pi login failed", err))
-      .finally(() => setLoading(false));
-  }, []);
+  const { loading } = useBootstrap();
 
   if (loading) {
-    return <div>Connecting to Pi Network…</div>;
+    return <div>Connecting to Pi Network...</div>;
   }
 
   return <AppRouter />;
