@@ -10,6 +10,7 @@ const mockPact = {
     username: "pi_dev_88",
     badges: ["Verified", "Active"],
   },
+  createdAt: "2025-01-10",
 };
 
 export default function PactDetail() {
@@ -28,9 +29,74 @@ export default function PactDetail() {
         </p>
       </section>
 
-      {/* OWNER */}
+      {/* OWNER INFO */}
       <section
         style={{
           padding: "1rem",
           border: "1px solid #ddd",
-          borderRadius: "
+          borderRadius: "8px",
+          marginBottom: "2rem",
+        }}
+      >
+        <p>
+          Offered by <strong>{mockPact.owner.username}</strong>
+        </p>
+
+        <div style={{ marginTop: "0.5rem" }}>
+          {mockPact.owner.badges.map((badge) => (
+            <span
+              key={badge}
+              style={{
+                padding: "0.25rem 0.6rem",
+                marginRight: "0.5rem",
+                background: "#eee",
+                borderRadius: "12px",
+                fontSize: "0.8rem",
+              }}
+            >
+              {badge}
+            </span>
+          ))}
+        </div>
+      </section>
+
+      {/* DESCRIPTION */}
+      <section style={{ marginBottom: "2rem" }}>
+        <h2>About this pact</h2>
+        <p style={{ marginTop: "0.75rem", lineHeight: 1.6 }}>
+          {mockPact.description}
+        </p>
+      </section>
+
+      {/* DISCLAIMER */}
+      <section
+        style={{
+          background: "#f5f5f5",
+          padding: "1.25rem",
+          borderRadius: "8px",
+          marginBottom: "2.5rem",
+        }}
+      >
+        <strong>PactPI does not process payments.</strong>
+        <p style={{ marginTop: "0.5rem", fontSize: "0.95rem" }}>
+          This platform only helps users describe agreements and assess
+          reliability. Any compensation or exchange is decided independently
+          between the involved parties.
+        </p>
+      </section>
+
+      {/* ACTIONS */}
+      <section>
+        <Link to="/agreements">
+          <button style={{ marginRight: "1rem" }}>
+            Back to agreements
+          </button>
+        </Link>
+
+        <Link to="/profile">
+          <button>View profile</button>
+        </Link>
+      </section>
+    </main>
+  );
+}
