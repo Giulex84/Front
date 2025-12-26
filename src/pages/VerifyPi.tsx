@@ -9,7 +9,7 @@ declare global {
 export default function VerifyPi() {
   const [error, setError] = useState<string | null>(null);
 
-  const startVerification = () => {
+  const verify = () => {
     setError(null);
 
     if (!window.Pi) {
@@ -25,43 +25,24 @@ export default function VerifyPi() {
           amount: 0.01,
           memo: "PactPI verification",
           metadata: {
-            purpose: "verify",
-            app: "PactPI"
+            purpose: "verify"
           }
         },
         {
-          onReadyForServerApproval: (paymentId: string) => {
-            console.log("Payment ready:", paymentId);
-          },
-
-          onReadyForServerCompletion: (
-            paymentId: string,
-            txid: string
-          ) => {
-            console.log("Payment completed:", paymentId, txid);
-          },
-
-          onCancel: () => {
-            setError("Pagamento annullato");
-          },
-
-          onError: (err: any) => {
-            console.error(err);
-            setError("Errore pagamento");
-          }
+          onReadyForServerApproval: () => {},
+          onReadyForServerCompletion: () => {},
+          onCancel: () => setError("Pagamento annullato"),
+          onError: () => setError("Errore Pi payment")
         }
       );
-    } catch (e) {
-      console.error(e);
+    } catch {
       setError("Failed to start payment");
     }
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <button onClick={startVerification}>
-        Verify with Pi (0.01 Pi)
-      </button>
+    <div>
+      <button onClick={verify}>Verify with Pi (0.01 Pi)</button>
       {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
