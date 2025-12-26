@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import Badge, { BadgeType } from "../components/Badge";
 
 const mockAgreements = [
   {
@@ -6,14 +7,14 @@ const mockAgreements = [
     title: "Pi DApp development support",
     description: "Help building frontend and Pi SDK integration.",
     owner: "pi_dev_88",
-    badges: ["Verified", "Reliable"],
+    badges: ["Verified", "Active"] as BadgeType[],
   },
   {
     id: "2",
     title: "Graphic design for Pi projects",
     description: "Logos, stickers, and branding assets.",
     owner: "design_pi",
-    badges: ["New"],
+    badges: ["New"] as BadgeType[],
   },
 ];
 
@@ -50,18 +51,7 @@ export default function Agreements() {
 
             <div style={{ marginTop: "0.5rem" }}>
               {a.badges.map((b) => (
-                <span
-                  key={b}
-                  style={{
-                    padding: "0.2rem 0.6rem",
-                    marginRight: "0.5rem",
-                    background: "#eee",
-                    borderRadius: "12px",
-                    fontSize: "0.8rem",
-                  }}
-                >
-                  {b}
-                </span>
+                <Badge key={b} type={b} />
               ))}
             </div>
 
