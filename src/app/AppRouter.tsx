@@ -1,27 +1,36 @@
 import { Routes, Route } from "react-router-dom";
+
 import Home from "../pages/Home";
+import About from "../pages/About";
+import Agreements from "../pages/Agreements";
+import Privacy from "../pages/Privacy";
+import Terms from "../pages/Terms";
 import VerifyPi from "../pages/VerifyPi";
+import Dashboard from "../pages/Dashboard";
+import CreatePact from "../pages/CreatePact";
+import PactDetail from "../pages/PactDetail";
+import Profile from "../pages/Profile";
+import Login from "../pages/Login";
 
 export default function AppRouter() {
   return (
     <Routes>
+      {/* Public */}
       <Route path="/" element={<Home />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
+      <Route path="/login" element={<Login />} />
+
+      {/* Core app */}
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/agreements" element={<Agreements />} />
+      <Route path="/agreements/new" element={<CreatePact />} />
+      <Route path="/agreements/:id" element={<PactDetail />} />
+      <Route path="/profile" element={<Profile />} />
+
+      {/* Pi */}
       <Route path="/verify" element={<VerifyPi />} />
-
-      {/* PLACEHOLDER TEMPORANEI */}
-      <Route path="/agreements" element={<Placeholder title="Agreements" />} />
-      <Route path="/about" element={<Placeholder title="About Pactpi" />} />
-      <Route path="/privacy" element={<Placeholder title="Privacy Policy" />} />
-      <Route path="/terms" element={<Placeholder title="Terms of Service" />} />
     </Routes>
-  );
-}
-
-function Placeholder({ title }: { title: string }) {
-  return (
-    <div style={{ padding: "2rem" }}>
-      <h1>{title}</h1>
-      <p>Page under construction.</p>
-    </div>
   );
 }
