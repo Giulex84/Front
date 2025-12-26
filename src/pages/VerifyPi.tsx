@@ -1,12 +1,4 @@
-// src/pages/VerifyPi.tsx
-
 import { useState } from "react";
-
-declare global {
-  interface Window {
-    Pi?: any;
-  }
-}
 
 export default function VerifyPi() {
   const [error, setError] = useState<string | null>(null);
@@ -16,7 +8,7 @@ export default function VerifyPi() {
     setError(null);
 
     if (!window.Pi) {
-      setError("Pi SDK not available. Open this page in Pi Browser.");
+      setError("Open this page in Pi Browser");
       return;
     }
 
@@ -27,36 +19,20 @@ export default function VerifyPi() {
         {
           amount: 0.01,
           memo: "Verify Pactpi account",
-          metadata: {
-            purpose: "verify",
-          },
+          metadata: { purpose: "verify" },
         },
         {
           onReadyForServerApproval: (paymentId: string) => {
-            // frontend-only flow → approve immediately
-            window.Pi.approvePayment(paymentId);
+            window.Pi?.approvePayment?.(paymentId);
           },
-
-          onReadyForServerCompletion: (
-            paymentId: string,
-            txid: string
-          ) => {
-            console.log("Payment completed", paymentId, txid);
-            alert("Verification successful 🎉");
+          onReadyForServerCompletion: () => {
+            alert("Verification successful");
           },
-
-          onCancel: () => {
-            setError("Payment cancelled");
-          },
-
-          onError: (err: any) => {
-            console.error(err);
-            setError("Payment failed");
-          },
+          onCancel: () => setError("Payment cancelled"),
+          onError: () => setError("Payment failed"),
         }
       );
-    } catch (err) {
-      console.error(err);
+    } catch {
       setError("Failed to start payment");
     } finally {
       setLoading(false);
@@ -68,10 +44,7 @@ export default function VerifyPi() {
       <button onClick={startVerifyPayment} disabled={loading}>
         Verify with Pi (0.01 Pi)
       </button>
-
-      {error && (
-        <p style={{ color: "red", marginTop: "1rem" }}>{error}</p>
-      )}
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
