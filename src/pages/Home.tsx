@@ -2,136 +2,71 @@ import { Link } from "react-router-dom";
 
 export default function Home() {
   return (
-    <main
-      style={{
-        maxWidth: "960px",
-        margin: "0 auto",
-        padding: "3rem 1.5rem",
-      }}
-    >
+    <main className="container">
       {/* HERO */}
-      <section style={{ marginBottom: "4rem" }}>
-        <p
-          style={{
-            textTransform: "uppercase",
-            letterSpacing: "0.08em",
-            fontSize: "0.85rem",
-            color: "#666",
-            marginBottom: "0.75rem",
-          }}
-        >
-          Digital agreements for the Pi ecosystem
+      <section className="hero">
+        <h1>Clear agreements, simple trust.</h1>
+        <p className="hero-sub">
+          PactPI helps people create clear digital pacts and build reputation
+          through transparent commitments — not payments.
         </p>
 
-        <h1 style={{ fontSize: "2.4rem", marginBottom: "1rem" }}>
-          Clear agreements,
-          <br />
-          simple confirmation.
-        </h1>
-
-        <p
-          style={{
-            fontSize: "1.15rem",
-            color: "#555",
-            maxWidth: "720px",
-          }}
-        >
-          PactPI helps people create clear digital pacts, build reputation,
-          and connect with reliable members of the Pi Network community.
-        </p>
-
-        <div style={{ marginTop: "2rem", display: "flex", gap: "1rem" }}>
+        <div className="actions">
           <Link to="/agreements/create">
-            <button>Create an agreement</button>
+            <button>Create a pact</button>
           </Link>
-
           <Link to="/agreements">
-            <button className="secondary">Explore pacts</button>
+            <button className="secondary">View public pacts</button>
           </Link>
         </div>
       </section>
 
-      {/* DISCLAIMER */}
-      <section
-        style={{
-          marginBottom: "4rem",
-          padding: "1.5rem",
-          border: "1px solid #eee",
-          borderRadius: "12px",
-          background: "#fafafa",
-          maxWidth: "760px",
-        }}
-      >
-        <strong>PactPI does not process payments.</strong>
-        <p style={{ marginTop: "0.5rem", color: "#666" }}>
-          Users independently decide how to fulfill agreements and manage any
-          compensation outside the platform.
+      {/* INTRO */}
+      <section>
+        <p>
+          <strong>PactPI</strong> is a reputation-first platform for the Pi
+          ecosystem. Users describe commitments clearly and let behavior speak
+          over time.
+        </p>
+        <p className="muted">
+          No payments. No intermediaries. No hidden logic.
         </p>
       </section>
 
       {/* HOW IT WORKS */}
-      <section style={{ marginBottom: "4rem" }}>
-        <h2 style={{ marginBottom: "1.5rem" }}>How it works</h2>
-
-        <div
-          style={{
-            display: "grid",
-            gap: "1.5rem",
-            gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
-          }}
-        >
+      <section>
+        <h2>How it works</h2>
+        <div className="grid">
           <div className="card">
             <h3>Create a pact</h3>
             <p>
-              Describe clearly what you offer, what is expected, and the scope
-              of the agreement.
-            </p>
-          </div>
-
-          <div className="card">
-            <h3>Build reputation</h3>
-            <p>
-              Reliability emerges over time through completed agreements and
-              visible behavior.
+              Describe what you offer, what you expect, and the scope of the
+              agreement.
             </p>
           </div>
 
           <div className="card">
             <h3>Stay transparent</h3>
             <p>
-              Public pacts help others evaluate trustworthiness and intent.
+              Public pacts allow others to understand commitments and behavior.
+            </p>
+          </div>
+
+          <div className="card">
+            <h3>Build reputation</h3>
+            <p>
+              Reliability emerges over time through fulfilled or broken pacts.
             </p>
           </div>
         </div>
       </section>
 
-      {/* WHY */}
-      <section style={{ marginBottom: "4rem", maxWidth: "760px" }}>
-        <h2 style={{ marginBottom: "1.5rem" }}>Why PactPI</h2>
-        <ul style={{ paddingLeft: "1.2rem" }}>
-          <li>No intermediaries</li>
-          <li>No managed payments</li>
-          <li>Reputation built on behavior</li>
-          <li>Designed for the Pi Network ecosystem</li>
-        </ul>
-      </section>
-
       {/* FOOTER */}
-      <footer
-        style={{
-          paddingTop: "2rem",
-          borderTop: "1px solid #eee",
-          fontSize: "0.9rem",
-          color: "#666",
-        }}
-      >
+      <footer className="footer">
+        <p>PactPI is a non-custodial reputation layer for the Pi ecosystem.</p>
         <p>
-          PactPI is an independent platform for digital agreements and
-          reputation.
-        </p>
-        <p style={{ marginTop: "0.5rem" }}>
-          <Link to="/privacy">Privacy Policy</Link> ·{" "}
-          <Link to="/terms">Terms of Service</Link>
+          <Link to="/privacy">Privacy</Link> ·{" "}
+          <Link to="/terms">Terms</Link>
         </p>
       </footer>
     </main>
