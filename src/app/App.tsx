@@ -1,11 +1,8 @@
+// src/app/App.tsx
+
 import { useEffect, useState } from "react";
 import AppRouter from "./AppRouter";
-import { piLogin } from "../services/piAuth";
-
-export type PiUser = {
-  uid: string;
-  username: string;
-};
+import { piLogin, PiUser } from "../services/piAuth";
 
 export default function App() {
   const [user, setUser] = useState<PiUser | null>(null);
