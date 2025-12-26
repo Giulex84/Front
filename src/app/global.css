@@ -44,3 +44,81 @@ button {
 .section {
   margin-bottom: 2.5rem;
 }
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+}
+
+.page-header {
+  margin-bottom: 2.5rem;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.form-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.list {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.5rem;
+  background: var(--surface);
+}
+
+.card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 999px;
+}
+
+.badge-good {
+  background: #e6f6ed;
+  color: #157347;
+}
+
+.badge-new {
+  background: #eef1f5;
+  color: #555;
+}
+
+.disclaimer {
+  margin-top: 2rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
