@@ -1,21 +1,9 @@
-export type PiUser = {
-  uid: string;
-  username: string;
-};
-
-export async function piLogin(): Promise<PiUser | null> {
+export async function piLogin(): Promise<void> {
   if (!window.Pi || !window.Pi.authenticate) {
-    return null;
+    return;
   }
 
-  const scopes = ["username"];
-
-  const result = await window.Pi.authenticate(scopes, {
+  await window.Pi.authenticate(["username"], {
     onIncompletePaymentFound: () => {},
   });
-
-  return {
-    uid: result.user.uid,
-    username: result.user.username,
-  };
 }
