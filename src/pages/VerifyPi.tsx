@@ -1,12 +1,6 @@
 import { useState } from "react";
 import "./Verify.css";
 
-declare global {
-  interface Window {
-    Pi?: any;
-  }
-}
-
 export default function Verify() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
