@@ -1,49 +1,72 @@
 import { useState } from "react";
+import "./Verify.css";
 
 declare global {
   interface Window {
-    Pi: any;
+    Pi?: any;
   }
 }
 
-export default function VerifyPi() {
+export default function Verify() {
   const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const verify = () => {
+  const startPayment = async () => {
     setError(null);
 
     if (!window.Pi) {
-      setError("Apri l'app nel Pi Browser");
+      setError("Pi Browser not detected. Open this page inside Pi Browser.");
       return;
     }
 
     try {
-      window.Pi.init({ version: "2.0" });
+      setLoading(true);
 
-      window.Pi.createPayment(
+      await window.Pi.createPayment(
         {
           amount: 0.01,
-          memo: "PactPI verification",
+          memo: "Verify Pactpi account",
           metadata: {
-            purpose: "verify"
-          }
+            purpose: "verify",
+            app: "pactpi",
+          },
         },
         {
-          onReadyForServerApproval: () => {},
-          onReadyForServerCompletion: () => {},
-          onCancel: () => setError("Pagamento annullato"),
-          onError: () => setError("Errore Pi payment")
+          onReadyForServerApproval: async () => {},
+          onReadyForServerCompletion: async () => {},
+          onCancel: () => setError("Payment cancelled."),
+          onError: (err: any) =>
+            setError(err?.message || "Failed to start payment."),
         }
       );
-    } catch {
-      setError("Failed to start payment");
+    } catch (e: any) {
+      setError(e?.message || "Failed to start payment.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div>
-      <button onClick={verify}>Verify with Pi (0.01 Pi)</button>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+    <div className="verify">
+      <div className="verify_card">
+        <h1>Verify with Pi</h1>
+        <p className="verify_description">
+          A small Pi payment is used to verify your Pactpi account.
+          This helps prevent abuse and ensures accountability.
+        </p>
+
+        <div className="verify_amount">0.01 Pi</div>
+
+        <button
+          className="verify_button"
+          onClick={startPayment}
+          disabled={loading}
+        >
+          {loading ? "Processing..." : "Verify with Pi"}
+        </button>
+
+        {error && <p className="verify_error">{error}</p>}
+      </div>
     </div>
   );
 }
