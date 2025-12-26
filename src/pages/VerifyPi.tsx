@@ -1,7 +1,7 @@
 import { useState } from "react";
 import "./Verify.css";
 
-export default function Verify() {
+export default function VerifyPi() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
@@ -9,7 +9,7 @@ export default function Verify() {
     setError(null);
 
     if (!window.Pi) {
-      setError("Pi Browser not detected. Open this page inside Pi Browser.");
+      setError("Open this page inside Pi Browser.");
       return;
     }
 
@@ -20,21 +20,18 @@ export default function Verify() {
         {
           amount: 0.01,
           memo: "Verify Pactpi account",
-          metadata: {
-            purpose: "verify",
-            app: "pactpi",
-          },
+          metadata: { purpose: "verify" },
         },
         {
           onReadyForServerApproval: async () => {},
           onReadyForServerCompletion: async () => {},
           onCancel: () => setError("Payment cancelled."),
-          onError: (err: any) =>
-            setError(err?.message || "Failed to start payment."),
+          onError: (err) =>
+            setError(err?.message || "Failed to start payment"),
         }
       );
     } catch (e: any) {
-      setError(e?.message || "Failed to start payment.");
+      setError(e?.message || "Failed to start payment");
     } finally {
       setLoading(false);
     }
@@ -44,19 +41,10 @@ export default function Verify() {
     <div className="verify">
       <div className="verify_card">
         <h1>Verify with Pi</h1>
-        <p className="verify_description">
-          A small Pi payment is used to verify your Pactpi account.
-          This helps prevent abuse and ensures accountability.
-        </p>
+        <p>Confirm your account with a small Pi payment.</p>
 
-        <div className="verify_amount">0.01 Pi</div>
-
-        <button
-          className="verify_button"
-          onClick={startPayment}
-          disabled={loading}
-        >
-          {loading ? "Processing..." : "Verify with Pi"}
+        <button onClick={startPayment} disabled={loading}>
+          {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
         </button>
 
         {error && <p className="verify_error">{error}</p>}
