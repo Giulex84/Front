@@ -5,6 +5,8 @@ import Agreements from "../pages/Agreements";
 import CreatePact from "../pages/CreatePact";
 import PactDetail from "../pages/PactDetail";
 import VerifyPi from "../pages/VerifyPi";
+import Privacy from "../pages/Privacy";
+import Terms from "../pages/Terms";
 
 export default function AppRouter() {
   return (
@@ -18,6 +20,10 @@ export default function AppRouter() {
 
       {/* Pi verification */}
       <Route path="/verify" element={<VerifyPi />} />
+
+      {/* Legal */}
+      <Route path="/privacy" element={<Privacy />} />
+      <Route path="/terms" element={<Terms />} />
 
       {/* Fallback */}
       <Route path="*" element={<Home />} />
