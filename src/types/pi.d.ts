@@ -2,7 +2,12 @@ export {};
 
 declare global {
   interface Window {
-    Pi: {
+    Pi?: {
+      authenticate?: (
+        scopes: string[],
+        options: any
+      ) => Promise<any>;
+
       createPayment: (
         payment: {
           amount: number;
@@ -18,7 +23,9 @@ declare global {
           onCancel?: () => void;
           onError?: (error: any) => void;
         }
-      ) => void;
+      ) => Promise<void>;
+
+      approvePayment?: (paymentId: string) => void;
     };
   }
 }
