@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 declare global {
   interface Window {
@@ -32,7 +32,6 @@ export default function VerifyPi() {
         {
           onReadyForServerApproval: (paymentId: string) => {
             console.log("Payment ready:", paymentId);
-            // ⛔ NON chiamare backend
           },
 
           onReadyForServerCompletion: (
