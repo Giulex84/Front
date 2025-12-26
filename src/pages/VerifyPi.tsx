@@ -1,54 +1,56 @@
 import { useState } from "react";
-import "./Verify.css";
 
 export default function VerifyPi() {
   const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
 
-  const startPayment = async () => {
-    setError(null);
-
+  const startPayment = () => {
     if (!window.Pi) {
-      setError("Open this page inside Pi Browser.");
+      setError("Pi Browser not detected");
       return;
     }
 
-    try {
-      setLoading(true);
-
-      await window.Pi.createPayment(
-        {
-          amount: 0.01,
-          memo: "Verify Pactpi account",
-          metadata: { purpose: "verify" },
+    window.Pi.createPayment(
+      {
+        amount: 0.01,
+        memo: "Account verification",
+        metadata: { reason: "verify" },
+      },
+      {
+        onReadyForServerApproval: (paymentId: string) => {
+          fetch("/api/pi/approve", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentId }),
+          });
         },
-        {
-          onReadyForServerApproval: async () => {},
-          onReadyForServerCompletion: async () => {},
-          onCancel: () => setError("Payment cancelled."),
-          onError: (err) =>
-            setError(err?.message || "Failed to start payment"),
-        }
-      );
-    } catch (e: any) {
-      setError(e?.message || "Failed to start payment");
-    } finally {
-      setLoading(false);
-    }
+
+        onReadyForServerCompletion: (paymentId: string, txid: string) => {
+          fetch("/api/pi/complete", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ paymentId, txid }),
+          });
+        },
+
+        onCancel: () => {
+          setError("Payment cancelled");
+        },
+
+        onError: (err: any) => {
+          console.error(err);
+          setError("Payment failed");
+        },
+      }
+    );
   };
 
   return (
-    <div className="verify">
-      <div className="verify_card">
-        <h1>Verify with Pi</h1>
-        <p>Confirm your account with a small Pi payment.</p>
+    <div style={{ padding: "2rem" }}>
+      <button onClick={startPayment}>
+        Verify with Pi (0.01 Pi)
+      </button>
 
-        <button onClick={startPayment} disabled={loading}>
-          {loading ? "Processing..." : "Verify with Pi (0.01 Pi)"}
-        </button>
-
-        {error && <p className="verify_error">{error}</p>}
-      </div>
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </div>
   );
 }
