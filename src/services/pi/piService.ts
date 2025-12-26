@@ -1,56 +1,46 @@
-import type { PiUser } from "../../types/pi";
+// src/services/pi/piService.ts
 
 declare global {
   interface Window {
-    Pi?: any;
+    Pi: any;
   }
 }
 
-/**
- * Login Pi Network
- */
-export async function piLogin(): Promise<{ user: PiUser }> {
-  if (!window.Pi) {
-    throw new Error("Pi SDK not available");
-  }
+export type PiUser = {
+  uid: string;
+  username: string;
+};
 
-  const auth = await window.Pi.authenticate(
-    ["username"],
-    {
-      onIncompletePaymentFound: () => {},
+export const piService = {
+  async init(): Promise<PiUser> {
+    if (!window.Pi) {
+      throw new Error("Pi SDK not available");
     }
-  );
 
-  return {
-    user: {
+    const scopes = ["username", "payments"];
+    const auth = await window.Pi.authenticate(scopes);
+
+    return {
       uid: auth.user.uid,
       username: auth.user.username,
-    },
-  };
-}
+    };
+  },
 
-/**
- * Verify payment (0.01 Pi)
- */
-export function startVerifyPayment() {
-  if (!window.Pi) {
-    throw new Error("Pi SDK not available");
-  }
-
-  window.Pi.createPayment(
-    {
-      amount: 0.01,
-      memo: "Verify Pactpi",
-    },
-    {
-      onReadyForServerApproval: (paymentId: string) => {
-        console.log("Approve payment", paymentId);
-      },
-      onReadyForServerCompletion: (paymentId: string, txid: string) => {
-        console.log("Completed", paymentId, txid);
-      },
-      onCancel: () => console.log("Cancelled"),
-      onError: (e: any) => console.error(e),
+  createPayment(amount: number, memo: string) {
+    if (!window.Pi) {
+      throw new Error("Pi SDK not available");
     }
-  );
-}
+
+    return window.Pi.createPayment(
+      { amount, memo },
+      {
+        onReadyForServerApproval: () => {},
+        onReadyForServerCompletion: () => {},
+        onCancel: () => {},
+        onError: (err: any) => {
+          console.error("Payment error", err);
+        },
+      }
+    );
+  },
+};
