@@ -1,53 +1,78 @@
-import { useState } from "react";
-import { useAgreements } from "../hooks/useAgreements";
+import { Link } from "react-router-dom";
+
+const mockAgreements = [
+  {
+    id: "1",
+    title: "Pi DApp development support",
+    description: "Help building frontend and Pi SDK integration.",
+    owner: "pi_dev_88",
+    badges: ["Verified", "Reliable"],
+  },
+  {
+    id: "2",
+    title: "Graphic design for Pi projects",
+    description: "Logos, stickers, and branding assets.",
+    owner: "design_pi",
+    badges: ["New"],
+  },
+];
 
 export default function Agreements() {
-  const { agreements, createAgreement, signAgreement } = useAgreements();
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-
   return (
-    <div>
+    <main style={{ padding: "2rem", maxWidth: "900px", margin: "0 auto" }}>
       <h1>Agreements</h1>
+      <p style={{ marginBottom: "1.5rem" }}>
+        Browse digital pacts created by members of the Pi community.
+      </p>
 
-      <input
-        placeholder="Title"
-        value={title}
-        onChange={e => setTitle(e.target.value)}
-      />
+      <Link to="/agreements/new">
+        <button style={{ marginBottom: "2rem" }}>
+          Create a new pact
+        </button>
+      </Link>
 
-      <textarea
-        placeholder="Content"
-        value={content}
-        onChange={e => setContent(e.target.value)}
-      />
+      <div style={{ display: "grid", gap: "1.5rem" }}>
+        {mockAgreements.map((a) => (
+          <div
+            key={a.id}
+            style={{
+              padding: "1.5rem",
+              border: "1px solid #ddd",
+              borderRadius: "8px",
+            }}
+          >
+            <h3>{a.title}</h3>
+            <p>{a.description}</p>
 
-      <button
-        onClick={() => {
-          createAgreement(title, content);
-          setTitle("");
-          setContent("");
-        }}
-      >
-        Create Agreement
-      </button>
+            <p style={{ marginTop: "0.5rem", fontSize: "0.9rem" }}>
+              Offered by <strong>{a.owner}</strong>
+            </p>
 
-      <ul>
-        {agreements.map(a => (
-          <li key={a.id}>
-            <strong>{a.title}</strong>
-            <p>{a.content}</p>
+            <div style={{ marginTop: "0.5rem" }}>
+              {a.badges.map((b) => (
+                <span
+                  key={b}
+                  style={{
+                    padding: "0.2rem 0.6rem",
+                    marginRight: "0.5rem",
+                    background: "#eee",
+                    borderRadius: "12px",
+                    fontSize: "0.8rem",
+                  }}
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
 
-{a.signedBy ? (
-  <p>Signed</p>
-) : (
-  <button onClick={() => signAgreement(a.id)}>
-    Sign with Pi
-  </button>
-)}
-          </li>
+            <Link to={`/agreements/${a.id}`}>
+              <button style={{ marginTop: "1rem" }}>
+                View pact
+              </button>
+            </Link>
+          </div>
         ))}
-      </ul>
-    </div>
+      </div>
+    </main>
   );
 }
